@@ -1,7 +1,11 @@
+using LibraryBL;
+using LibraryCommon.API;
+using LibraryDAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +30,8 @@ namespace LibraryServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContextPool<LibraryContext>(options => options.UseSqlite("Data Source = library.db"));
+            services.AddScoped<IDataService, DataService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -4,14 +4,76 @@
     "D:\\Course\\Library\\LibraryServer\\LibraryServer\\LibraryServer.csproj": {}
   },
   "projects": {
-    "D:\\Course\\Library\\LibraryServer\\LibraryServer\\LibraryServer.csproj": {
+    "D:\\Course\\Library\\LibraryServer\\LibraryBL\\LibraryBL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Course\\Library\\LibraryServer\\LibraryServer\\LibraryServer.csproj",
-        "projectName": "LibraryServer",
-        "projectPath": "D:\\Course\\Library\\LibraryServer\\LibraryServer\\LibraryServer.csproj",
+        "projectUniqueName": "D:\\Course\\Library\\LibraryServer\\LibraryBL\\LibraryBL.csproj",
+        "projectName": "LibraryBL",
+        "projectPath": "D:\\Course\\Library\\LibraryServer\\LibraryBL\\LibraryBL.csproj",
         "packagesPath": "C:\\Users\\barsp\\.nuget\\packages\\",
-        "outputPath": "D:\\Course\\Library\\LibraryServer\\LibraryServer\\obj\\",
+        "outputPath": "D:\\Course\\Library\\LibraryServer\\LibraryBL\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\barsp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "D:\\Course\\Library\\LibraryServer\\LibraryCommon\\LibraryCommon.csproj": {
+                "projectPath": "D:\\Course\\Library\\LibraryServer\\LibraryCommon\\LibraryCommon.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Course\\Library\\LibraryServer\\LibraryCommon\\LibraryCommon.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Course\\Library\\LibraryServer\\LibraryCommon\\LibraryCommon.csproj",
+        "projectName": "LibraryCommon",
+        "projectPath": "D:\\Course\\Library\\LibraryServer\\LibraryCommon\\LibraryCommon.csproj",
+        "packagesPath": "C:\\Users\\barsp\\.nuget\\packages\\",
+        "outputPath": "D:\\Course\\Library\\LibraryServer\\LibraryCommon\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -43,6 +105,152 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Course\\Library\\LibraryServer\\LibraryDAL\\LibraryDAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Course\\Library\\LibraryServer\\LibraryDAL\\LibraryDAL.csproj",
+        "projectName": "LibraryDAL",
+        "projectPath": "D:\\Course\\Library\\LibraryServer\\LibraryDAL\\LibraryDAL.csproj",
+        "packagesPath": "C:\\Users\\barsp\\.nuget\\packages\\",
+        "outputPath": "D:\\Course\\Library\\LibraryServer\\LibraryDAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\barsp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "D:\\Course\\Library\\LibraryServer\\LibraryCommon\\LibraryCommon.csproj": {
+                "projectPath": "D:\\Course\\Library\\LibraryServer\\LibraryCommon\\LibraryCommon.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Course\\Library\\LibraryServer\\LibraryServer\\LibraryServer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Course\\Library\\LibraryServer\\LibraryServer\\LibraryServer.csproj",
+        "projectName": "LibraryServer",
+        "projectPath": "D:\\Course\\Library\\LibraryServer\\LibraryServer\\LibraryServer.csproj",
+        "packagesPath": "C:\\Users\\barsp\\.nuget\\packages\\",
+        "outputPath": "D:\\Course\\Library\\LibraryServer\\LibraryServer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\barsp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "D:\\Course\\Library\\LibraryServer\\LibraryBL\\LibraryBL.csproj": {
+                "projectPath": "D:\\Course\\Library\\LibraryServer\\LibraryBL\\LibraryBL.csproj"
+              },
+              "D:\\Course\\Library\\LibraryServer\\LibraryCommon\\LibraryCommon.csproj": {
+                "projectPath": "D:\\Course\\Library\\LibraryServer\\LibraryCommon\\LibraryCommon.csproj"
+              },
+              "D:\\Course\\Library\\LibraryServer\\LibraryDAL\\LibraryDAL.csproj": {
+                "projectPath": "D:\\Course\\Library\\LibraryServer\\LibraryDAL\\LibraryDAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -57,6 +265,24 @@
               "noWarn": [
                 "NU1605"
               ]
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[5.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
