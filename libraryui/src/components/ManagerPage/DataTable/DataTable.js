@@ -19,15 +19,42 @@ const columns = [
 ];
 
 const rows = [
-  { id: 1, title: "book1", author: "Jon", publishDate: new Date(), price: 32.2 },
-  { id: 2, title: "book2", author: "Jon", publishDate: new Date('1.1.98'), price: 35 },
-  { id: 3, title: "book3", author: "Jon", publishDate: new Date('4/8/21'), price: 11.5 },
+  {
+    id: 1,
+    title: "book1",
+    author: "Jon",
+    publishDate: new Date(),
+    price: 32.2,
+  },
+  {
+    id: 2,
+    title: "book2",
+    author: "Jon",
+    publishDate: new Date("1.1.98"),
+    price: 35,
+  },
+  {
+    id: 3,
+    title: "book3",
+    author: "Jon",
+    publishDate: new Date("4/8/21"),
+    price: 11.5,
+  },
 ];
 
-export default function DataTable() {
+const DataTable = ({ select }) => {
   return (
     <div style={{ height: 400, width: "100%", backgroundColor: "#424242" }}>
-      <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        checkboxSelection
+        // onSelectionChange={selectedHandler}
+        onRowClick={(params) => select(params.row)}
+      />
     </div>
   );
-}
+};
+
+export default DataTable;
