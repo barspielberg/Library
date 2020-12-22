@@ -16,8 +16,7 @@ const useStyles = makeStyles({
 const Navbar = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [value, setValue] = useState("/");
-
+  const [value, setValue] = useState(history.location.pathname);
   return (
     <BottomNavigation
       value={value}
