@@ -1,0 +1,12 @@
+D:\Course\Library\LibraryServer\LibraryCommon\bin\Debug\net5.0\LibraryCommon.deps.json
+D:\Course\Library\LibraryServer\LibraryCommon\bin\Debug\net5.0\LibraryCommon.dll
+D:\Course\Library\LibraryServer\LibraryCommon\bin\Debug\net5.0\ref\LibraryCommon.dll
+D:\Course\Library\LibraryServer\LibraryCommon\bin\Debug\net5.0\LibraryCommon.pdb
+D:\Course\Library\LibraryServer\LibraryCommon\obj\Debug\net5.0\LibraryCommon.csprojAssemblyReference.cache
+D:\Course\Library\LibraryServer\LibraryCommon\obj\Debug\net5.0\LibraryCommon.GeneratedMSBuildEditorConfig.editorconfig
+D:\Course\Library\LibraryServer\LibraryCommon\obj\Debug\net5.0\LibraryCommon.AssemblyInfoInputs.cache
+D:\Course\Library\LibraryServer\LibraryCommon\obj\Debug\net5.0\LibraryCommon.AssemblyInfo.cs
+D:\Course\Library\LibraryServer\LibraryCommon\obj\Debug\net5.0\LibraryCommon.csproj.CoreCompileInputs.cache
+D:\Course\Library\LibraryServer\LibraryCommon\obj\Debug\net5.0\LibraryCommon.dll
+D:\Course\Library\LibraryServer\LibraryCommon\obj\Debug\net5.0\ref\LibraryCommon.dll
+D:\Course\Library\LibraryServer\LibraryCommon\obj\Debug\net5.0\LibraryCommon.pdb

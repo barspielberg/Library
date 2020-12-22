@@ -10,5 +10,7 @@ namespace LibraryCommon.Models
         string Title { get; }
         string Author { get; }
         DateTime PublishDate { get; }
+        double Price { get; }
+
     }
 }
