@@ -9,7 +9,7 @@ const ManagerPage = () => {
     return (
         <div className={classes.Page}>
         <DataTable select={select}/>
-        <EditBook selected={selected}/>
+        <EditBook selected={selected} select={select}/>
         </div>
     );
 };

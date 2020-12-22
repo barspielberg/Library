@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Fab, InputAdornment, makeStyles, TextField } from "@material-ui/core";
+import {
+  AppBar,
+  Fab,
+  InputAdornment,
+  makeStyles,
+  Tab,
+  Tabs,
+  TextField,
+} from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
   MuiPickersUtilsProvider,
@@ -21,8 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditBook = ({ selected }) => {
+const EditBook = ({ selected, select }) => {
   const classes = useStyles();
+
+  const [isNew, setIsNew] = useState(true);
 
   const [id, setId] = useState(selected.id);
   const [title, setTitle] = useState(selected.title);
@@ -31,29 +41,45 @@ const EditBook = ({ selected }) => {
   const [price, setPrice] = useState(selected.price);
 
   useEffect(() => {
-    setId(selected.id);
-    setTitle(selected.title);
-    setAuthor(selected.author);
-    setPrice(selected.price);
-    setPublishDate(selected.publishDate);
+    setId(selected.id || "");
+    setTitle(selected.title || "");
+    setAuthor(selected.author || "");
+    setPrice(selected.price || "");
+    setPublishDate(selected.publishDate || null);
   }, [setId, setTitle, setAuthor, setPublishDate, setPrice, selected]);
+
+  useEffect(() => setIsNew(!selected.id), [setIsNew, selected]);
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <TextField
-        id="id"
-        label="id"
-        value={id}
-        InputProps={{
-          readOnly: true,
-        }}
-        InputLabelProps={{
-          shrink: !!id,
-        }}
-        onChange={(e) => {
-          setId(e.target.value);
-        }}
-      />
+      <AppBar position="static" color="default">
+        <Tabs
+          value={isNew}
+          onChange={(e, v) => select({})}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+        >
+          <Tab label="Edit Book" disabled={isNew} value={false} />
+          <Tab label="New Book" value={true} />
+        </Tabs>
+      </AppBar>
+      {!isNew && (
+        <TextField
+          id="id"
+          label="id"
+          value={id}
+          InputProps={{
+            readOnly: true,
+          }}
+          InputLabelProps={{
+            shrink: !!id,
+          }}
+          onChange={(e) => {
+            setId(e.target.value);
+          }}
+        />
+      )}
       <TextField
         required
         id="title"
