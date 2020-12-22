@@ -14,6 +14,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import SaveIcon from "@material-ui/icons/SaveOutlined";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -139,7 +140,7 @@ const EditBook = ({ selected, select }) => {
       />
       <div style={{ display: "flex", flexDirection: "row-reverse" }}>
         <Fab color="secondary" aria-label="edit">
-          <SaveIcon />
+          {isNew ? <AddIcon /> : <SaveIcon />}
         </Fab>
       </div>
     </form>

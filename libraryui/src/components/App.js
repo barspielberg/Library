@@ -13,7 +13,7 @@ const theme = createMuiTheme({
       main: blue[300],
     },
     secondary: {
-      main: green[300],
+      main: green['A400'],
     },
   },
 });
