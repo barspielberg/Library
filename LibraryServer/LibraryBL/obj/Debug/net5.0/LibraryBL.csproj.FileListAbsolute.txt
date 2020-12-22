@@ -1,0 +1,14 @@
+D:\Course\Library\LibraryServer\LibraryBL\bin\Debug\net5.0\LibraryBL.deps.json
+D:\Course\Library\LibraryServer\LibraryBL\bin\Debug\net5.0\LibraryBL.dll
+D:\Course\Library\LibraryServer\LibraryBL\bin\Debug\net5.0\ref\LibraryBL.dll
+D:\Course\Library\LibraryServer\LibraryBL\bin\Debug\net5.0\LibraryBL.pdb
+D:\Course\Library\LibraryServer\LibraryBL\bin\Debug\net5.0\LibraryCommon.dll
+D:\Course\Library\LibraryServer\LibraryBL\bin\Debug\net5.0\LibraryCommon.pdb
+D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.GeneratedMSBuildEditorConfig.editorconfig
+D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.AssemblyInfoInputs.cache
+D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.AssemblyInfo.cs
+D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.csproj.CoreCompileInputs.cache
+D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.csproj.CopyComplete
+D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.dll
+D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\ref\LibraryBL.dll
+D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.pdb
