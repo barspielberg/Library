@@ -1,5 +1,6 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 const columns = [
   { field: "id", headerName: "ID", width: 100 },
@@ -20,7 +21,7 @@ const columns = [
 
 const rows = [
   {
-    id: 1,
+    id: 5,
     title: "book1",
     author: "Jon",
     publishDate: new Date(),
@@ -41,18 +42,36 @@ const rows = [
     price: 11.5,
   },
 ];
-
+const btnStyle = {
+  position: "absolute",
+  bottom: "0.5rem",
+  left: "8rem",
+  color: "white",
+  background: "transparent",
+  border: "none",
+};
 const DataTable = ({ select }) => {
+  const [selcetedBooks, setSelectedBooks] = useState([]);
+
+  const deleteHandler = () => {
+    console.log(selcetedBooks);
+  };
+
   return (
-    <div style={{ height: 400, width: "100%", backgroundColor: "#424242" }}>
+    <div style={{ height: 400, width: 750, backgroundColor: "#424242" }}>
       <DataGrid
         rows={rows}
         columns={columns}
         pageSize={5}
         checkboxSelection
-        // onSelectionChange={selectedHandler}
+        onSelectionChange={(params) => setSelectedBooks(params.rowIds)}
         onRowClick={(params) => select(params.row)}
       />
+      {selcetedBooks.length > 0 && (
+        <button style={btnStyle} onClick={deleteHandler}>
+          <DeleteForeverIcon />
+        </button>
+      )}
     </div>
   );
 };
