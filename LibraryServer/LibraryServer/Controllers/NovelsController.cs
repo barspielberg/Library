@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibraryCommon.Models;
 using LibraryDAL;
+using LibraryCommon.API;
 
 namespace LibraryServer.Controllers
 {
@@ -14,95 +15,33 @@ namespace LibraryServer.Controllers
     [ApiController]
     public class NovelsController : ControllerBase
     {
-        private readonly LibraryContext _context;
+        private readonly IDataService service;
 
-        public NovelsController(LibraryContext context)
+        public NovelsController(IDataService service)
         {
-            _context = context;
+            this.service = service;
         }
 
-        // GET: api/Novels
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Novel>>> GetNovels()
         {
-            return await _context.Novels.ToListAsync();
+            return await service.GetBooks<Novel>().ToListAsync();
         }
 
-        // GET: api/Novels/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Novel>> GetNovel(Guid id)
-        {
-            var novel = await _context.Novels.FindAsync(id);
-
-            if (novel == null)
-            {
-                return NotFound();
-            }
-
-            return novel;
-        }
-
-        // PUT: api/Novels/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutNovel(Guid id, Novel novel)
-        {
-            if (id != novel.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(novel).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NovelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Novels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Novel>> PostNovel(Novel novel)
+        public async Task<ActionResult<Novel>> PostNovel(Novel book)
         {
-            _context.Novels.Add(novel);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetNovel", new { id = novel.Id }, novel);
+            var dbBook = await service.PostBookAsnc(book);
+            if (dbBook == null) return BadRequest();
+            return dbBook;
         }
 
-        // DELETE: api/Novels/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNovel(Guid id)
+        public async Task<ActionResult<Novel>> DeleteNovel(Guid id)
         {
-            var novel = await _context.Novels.FindAsync(id);
-            if (novel == null)
-            {
-                return NotFound();
-            }
-
-            _context.Novels.Remove(novel);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool NovelExists(Guid id)
-        {
-            return _context.Novels.Any(e => e.Id == id);
+            var dbBook = await service.DeleteBookAsnc<Novel>(id);
+            if (dbBook == null) return BadRequest();
+            return dbBook;
         }
     }
 }

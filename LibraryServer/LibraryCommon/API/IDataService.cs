@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryCommon.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,8 @@ namespace LibraryCommon.API
 {
     public interface IDataService
     {
+        IQueryable<T> GetBooks<T>() where T : IBook;
+        Task<T> PostBookAsnc<T>(T book) where T : IBook;
+        Task<T> DeleteBookAsnc<T>(Guid id) where T : IBook;
     }
 }

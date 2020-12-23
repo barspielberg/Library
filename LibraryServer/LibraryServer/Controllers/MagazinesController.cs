@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibraryCommon.Models;
 using LibraryDAL;
+using LibraryCommon.API;
 
 namespace LibraryServer.Controllers
 {
@@ -14,95 +15,33 @@ namespace LibraryServer.Controllers
     [ApiController]
     public class MagazinesController : ControllerBase
     {
-        private readonly LibraryContext _context;
+        private readonly IDataService service;
 
-        public MagazinesController(LibraryContext context)
+        public MagazinesController(IDataService service)
         {
-            _context = context;
+            this.service = service;
         }
 
-        // GET: api/Magazines
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Magazine>>> GetMagazines()
         {
-            return await _context.Magazines.ToListAsync();
+            return await service.GetBooks<Magazine>().ToListAsync();
         }
 
-        // GET: api/Magazines/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Magazine>> GetMagazine(Guid id)
-        {
-            var magazine = await _context.Magazines.FindAsync(id);
-
-            if (magazine == null)
-            {
-                return NotFound();
-            }
-
-            return magazine;
-        }
-
-        // PUT: api/Magazines/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMagazine(Guid id, Magazine magazine)
-        {
-            if (id != magazine.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(magazine).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MagazineExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Magazines
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Magazine>> PostMagazine(Magazine magazine)
         {
-            _context.Magazines.Add(magazine);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetMagazine", new { id = magazine.Id }, magazine);
+            var dbBook = await service.PostBookAsnc(magazine);
+            if (dbBook == null) return BadRequest();
+            return dbBook;         
         }
 
-        // DELETE: api/Magazines/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMagazine(Guid id)
+        public async Task<ActionResult<Magazine>> DeleteMagazine(Guid id)
         {
-            var magazine = await _context.Magazines.FindAsync(id);
-            if (magazine == null)
-            {
-                return NotFound();
-            }
-
-            _context.Magazines.Remove(magazine);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool MagazineExists(Guid id)
-        {
-            return _context.Magazines.Any(e => e.Id == id);
+            var dbBook = await service.DeleteBookAsnc<Magazine>(id);
+            if (dbBook == null) return BadRequest();
+            return dbBook;
         }
     }
 }

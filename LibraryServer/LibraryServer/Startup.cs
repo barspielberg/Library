@@ -47,7 +47,6 @@ namespace LibraryServer
                     .AllowAnyMethod()
                     .AllowCredentials()
                     .WithOrigins("http://localhost:3000/");
-
                 });
             });
         }

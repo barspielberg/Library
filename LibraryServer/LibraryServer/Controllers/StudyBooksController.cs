@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibraryCommon.Models;
 using LibraryDAL;
+using LibraryCommon.API;
 
 namespace LibraryServer.Controllers
 {
@@ -14,95 +15,33 @@ namespace LibraryServer.Controllers
     [ApiController]
     public class StudyBooksController : ControllerBase
     {
-        private readonly LibraryContext _context;
+        private readonly IDataService service;
 
-        public StudyBooksController(LibraryContext context)
+        public StudyBooksController(IDataService service)
         {
-            _context = context;
+            this.service = service;
         }
 
-        // GET: api/StudyBooks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StudyBook>>> GetStudyBooks()
+        public async Task<ActionResult<IEnumerable<StudyBook>>> GetStudyBook()
         {
-            return await _context.StudyBooks.ToListAsync();
+            return await service.GetBooks<StudyBook>().ToListAsync();
         }
 
-        // GET: api/StudyBooks/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<StudyBook>> GetStudyBook(Guid id)
-        {
-            var studyBook = await _context.StudyBooks.FindAsync(id);
-
-            if (studyBook == null)
-            {
-                return NotFound();
-            }
-
-            return studyBook;
-        }
-
-        // PUT: api/StudyBooks/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudyBook(Guid id, StudyBook studyBook)
-        {
-            if (id != studyBook.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(studyBook).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudyBookExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/StudyBooks
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<StudyBook>> PostStudyBook(StudyBook studyBook)
+        public async Task<ActionResult<StudyBook>> PostStudyBook(StudyBook book)
         {
-            _context.StudyBooks.Add(studyBook);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetStudyBook", new { id = studyBook.Id }, studyBook);
+            var dbBook = await service.PostBookAsnc(book);
+            if (dbBook == null) return BadRequest();
+            return dbBook;
         }
 
-        // DELETE: api/StudyBooks/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStudyBook(Guid id)
+        public async Task<ActionResult<StudyBook>> DeleteStudyBook(Guid id)
         {
-            var studyBook = await _context.StudyBooks.FindAsync(id);
-            if (studyBook == null)
-            {
-                return NotFound();
-            }
-
-            _context.StudyBooks.Remove(studyBook);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool StudyBookExists(Guid id)
-        {
-            return _context.StudyBooks.Any(e => e.Id == id);
+            var dbBook = await service.DeleteBookAsnc<StudyBook>(id);
+            if (dbBook == null) return BadRequest();
+            return dbBook;
         }
     }
 }
