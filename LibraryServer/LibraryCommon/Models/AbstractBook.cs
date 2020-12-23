@@ -6,14 +6,14 @@ namespace LibraryCommon.Models
 {
     public abstract class AbstractBook : IBook
     {
-        public Guid Id { get; init; }
+        public Guid Id { get; set; }
 
-        public string Title { get; init; }
+        public string Title { get; set; }
 
-        public string Author { get; init; }
+        public string Author { get; set; }
 
-        public DateTime PublishDate { get; init; }
+        public DateTime PublishDate { get; set; }
 
-        public double Price { get; init; }
+        public double Price { get; set; }
     }
 }

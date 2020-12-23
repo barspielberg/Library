@@ -12,3 +12,4 @@ D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.csproj.Copy
 D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.dll
 D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\ref\LibraryBL.dll
 D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.pdb
+D:\Course\Library\LibraryServer\LibraryBL\obj\Debug\net5.0\LibraryBL.csprojAssemblyReference.cache

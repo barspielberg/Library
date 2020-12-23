@@ -9,8 +9,8 @@ namespace LibraryCommon.API
 {
     public interface IDataService
     {
-        IQueryable<T> GetBooks<T>() where T : IBook;
-        Task<T> PostBookAsnc<T>(T book) where T : IBook;
-        Task<T> DeleteBookAsnc<T>(Guid id) where T : IBook;
+        IQueryable<T> GetBooks<T>() where T : AbstractBook;
+        Task<T> PostBookAsnc<T>(T book) where T : AbstractBook;
+        Task<T> DeleteBookAsnc<T>(Guid id) where T : AbstractBook;
     }
 }

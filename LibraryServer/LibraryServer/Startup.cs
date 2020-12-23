@@ -32,6 +32,7 @@ namespace LibraryServer
         {
             services.AddDbContextPool<LibraryContext>(options => options.UseSqlite("Data Source = library.db"));
             services.AddScoped<IDataService, DataService>();
+            services.AddScoped<IRepository, LibraryRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

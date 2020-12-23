@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryCommon.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,8 @@ namespace LibraryCommon.API
 {
     public interface IRepository
     {
+        IQueryable<T> GetBooks<T>() where T : AbstractBook;
+        Task<T> DeleteBookAsnc<T>(Guid id) where T : AbstractBook;
+        Task<T> PostBookAsnc<T>(T book) where T : AbstractBook;
     }
 }
