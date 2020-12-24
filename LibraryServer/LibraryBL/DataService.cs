@@ -31,5 +31,10 @@ namespace LibraryBL
         {
             return repository.PostBookAsnc<T>(book);
         }
+
+        public Task<T> PutBookAsnc<T>(Guid id, T book) where T : AbstractBook
+        {
+            return repository.PutBookAsnc(id, book);
+        }
     }
 }

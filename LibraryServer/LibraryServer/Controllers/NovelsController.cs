@@ -36,6 +36,14 @@ namespace LibraryServer.Controllers
             return dbBook;
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Novel>> PutNovel(Guid id, Novel book)
+        {
+            var dbBook = await service.PutBookAsnc(id, book);
+            if (dbBook == null) return BadRequest();
+            return dbBook;
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<Novel>> DeleteNovel(Guid id)
         {

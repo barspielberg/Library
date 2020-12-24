@@ -47,6 +47,23 @@ namespace LibraryDAL
             catch (Exception) { return null; }
         }
 
+        public async Task<T> PutBookAsnc<T>(Guid id, T book) where T : AbstractBook
+        {
+            try
+            {
+                if (id != book.Id) return null;
+                var dbBook = FindBook<T>(id);
+                dbBook.Price = book.Price;
+                dbBook.Title = book.Title;
+                dbBook.PublishDate = book.PublishDate;
+                dbBook.Author = book.Author;
+
+                await context.SaveChangesAsync();
+                return FindBook<T>(id); ;
+            }
+            catch (Exception) { return null; }
+        }
+
         private T FindBook<T>(Guid id) where T : AbstractBook
         {
             return context.Set<T>().FirstOrDefault(b => b.Id == id);

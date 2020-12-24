@@ -29,9 +29,17 @@ namespace LibraryServer.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Magazine>> PostMagazine(Magazine magazine)
+        public async Task<ActionResult<Magazine>> PostMagazine(Magazine book)
         {
-            var dbBook = await service.PostBookAsnc(magazine);
+            var dbBook = await service.PostBookAsnc(book);
+            if (dbBook == null) return BadRequest();
+            return dbBook;         
+        } 
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Magazine>> PutMagazine(Guid id,Magazine book)
+        {
+            var dbBook = await service.PutBookAsnc(id,book);
             if (dbBook == null) return BadRequest();
             return dbBook;         
         }
