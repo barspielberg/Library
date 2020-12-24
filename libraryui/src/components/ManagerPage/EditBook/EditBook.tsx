@@ -22,6 +22,8 @@ import AddIcon from "@material-ui/icons/Add";
 import Book from "../../../models/Book";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import BookType from "../../../models/BookType";
+import { postBook } from "../../../services/dataService";
+import { isDate, isMoment } from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,6 +78,23 @@ const EditBook = ({ selected, select }: props) => {
         {k}
       </MenuItem>
     ));
+
+  const onSubmitHandler = () => {
+    if (isNew) {
+      let date: Date;
+      if (isDate(publishDate)) date = publishDate as Date;
+      else if (isMoment(publishDate))
+        date = (publishDate as moment.Moment).toDate();
+      else date = new Date();
+
+      postBook(type, {
+        title,
+        author,
+        price,
+        publishDate: date,
+      });
+    }
+  };
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
@@ -177,7 +196,7 @@ const EditBook = ({ selected, select }: props) => {
         }}
       />
       <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-        <Fab color="secondary" aria-label="edit">
+        <Fab color="secondary" aria-label="edit" onClick={onSubmitHandler}>
           {isNew ? <AddIcon /> : <SaveIcon />}
         </Fab>
       </div>

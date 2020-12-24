@@ -1,8 +1,9 @@
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { ColDef, DataGrid, RowId } from "@material-ui/data-grid";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import Book from "../../../models/Book";
 import BookType from "../../../models/BookType";
+import { getBooks } from "../../../services/dataService";
 
 const columns: ColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
@@ -23,11 +24,11 @@ const columns: ColDef[] = [
   { field: "price", headerName: "Price", width: 70 },
 ];
 
-const rows = [
-  new Book("5", "book1", "Jon", new Date(), 32.2, BookType.Magazine),
-  new Book("2", "book2", "Jon", new Date("1.1.98"), 35, BookType.StudyBook),
-  new Book("3", "book3", "Jon", new Date("4/8/21"), 11.5, BookType.Novel),
-];
+// const rows = [
+//   new Book("5", "book1", "Jon", new Date(), 32.2, BookType.Magazine),
+//   new Book("2", "book2", "Jon", new Date("1.1.98"), 35, BookType.StudyBook),
+//   new Book("3", "book3", "Jon", new Date("4/8/21"), 11.5, BookType.Novel),
+// ];
 const btnStyle: CSSProperties = {
   position: "absolute",
   bottom: "0.5rem",
@@ -44,6 +45,11 @@ type props = {
 
 const DataTable = ({ select }: props) => {
   const [selcetedBooks, setSelectedBooks] = useState<RowId[]>([]);
+  const [rows, setRows] = useState<Book[]>([]);
+
+  useEffect(() => {
+    getBooks(BookType.Magazine).then((r) => setRows(r));
+  }, [setRows]);
 
   const deleteHandler = () => {
     console.log(selcetedBooks);
