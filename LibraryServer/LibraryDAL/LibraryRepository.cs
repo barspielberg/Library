@@ -17,17 +17,19 @@ namespace LibraryDAL
             this.context = context;
         }
 
-        public async Task<T> DeleteBookAsnc<T>(Guid id) where T : AbstractBook
+        public async Task<bool> DeleteBooksAsnc<T>(Guid[] ids) where T : AbstractBook
         {
             try
             {
-                var dbBook = FindBook<T>(id);
-                if (dbBook == null) return null;
-                context.Remove(dbBook);
+                var dbBooks = ids.Select(i => FindBook<T>(i)).Where(b => b != null);
+
+                if (dbBooks.Count() <= 0) return false;
+
+                context.RemoveRange(dbBooks);
                 await context.SaveChangesAsync();
-                return dbBook;
+                return true;
             }
-            catch (Exception) { return null; }
+            catch (Exception) { return false; }
         }
 
         public IQueryable<T> GetBooks<T>() where T : AbstractBook

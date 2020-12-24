@@ -44,12 +44,12 @@ namespace LibraryServer.Controllers
             return dbBook;
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Novel>> DeleteNovel(Guid id)
+        [HttpDelete]
+        public async Task<ActionResult<Magazine>> DeleteNovels(params Guid[] ids)
         {
-            var dbBook = await service.DeleteBookAsnc<Novel>(id);
-            if (dbBook == null) return BadRequest();
-            return dbBook;
+            var res = await service.DeleteBooksAsnc<Novel>(ids);
+            if (res) return Ok();
+            return BadRequest();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace LibraryCommon.API
     {
         IQueryable<T> GetBooks<T>() where T : AbstractBook;
         Task<T> PostBookAsnc<T>(T book) where T : AbstractBook;
-        Task<T> DeleteBookAsnc<T>(Guid id) where T : AbstractBook;
+        Task<bool> DeleteBooksAsnc<T>(Guid[] ids) where T : AbstractBook;
         Task<T> PutBookAsnc<T>(Guid id, T book) where T : AbstractBook;
     }
 }

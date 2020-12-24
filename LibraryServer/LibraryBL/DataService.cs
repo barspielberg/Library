@@ -17,9 +17,9 @@ namespace LibraryBL
             this.repository = repository;
         }
 
-        public Task<T> DeleteBookAsnc<T>(Guid id) where T : AbstractBook
+        public Task<bool> DeleteBooksAsnc<T>(Guid[] ids) where T : AbstractBook
         {
-            return repository.DeleteBookAsnc<T>(id);
+            return repository.DeleteBooksAsnc<T>(ids);
         }
 
         public IQueryable<T> GetBooks<T>() where T : AbstractBook
