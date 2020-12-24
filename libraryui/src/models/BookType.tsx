@@ -1,5 +1,7 @@
 enum BookType {
-    Magazine, Novel, StudyBook
+  Magazine = "Magazine",
+  Novel = "Novel",
+  StudyBook = "Study Book",
 }
 
-export default BookType
+export default BookType;

@@ -23,7 +23,7 @@ namespace LibraryDAL
             {
                 var dbBook = FindBook<T>(id);
                 if (dbBook == null) return null;
-                context.Remove<T>(dbBook);
+                context.Remove(dbBook);
                 await context.SaveChangesAsync();
                 return dbBook;
             }

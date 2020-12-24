@@ -10,7 +10,7 @@ const columns: ColDef[] = [
     field: "type",
     headerName: "Type",
     width: 120,
-    valueFormatter: (params) => BookType[Number(params.value)],
+    // valueFormatter: (params) => BookType[Number(params.value)],
   },
   { field: "title", headerName: "Title", width: 120 },
   { field: "author", headerName: "Author", width: 120 },

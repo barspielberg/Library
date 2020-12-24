@@ -70,19 +70,12 @@ const EditBook = ({ selected, select }: props) => {
   }, [setId, setTitle, setAuthor, setPublishDate, setPrice, selected]);
 
   useEffect(() => setIsNew(!selected.id), [setIsNew, selected]);
-
-  const getMenuItem = () => {
-    const items = [];
-    for (const val in BookType) {
-      if (!isNaN(Number(val)))
-        items.push(
-          <MenuItem key={val} value={val}>
-            {BookType[val]}
-          </MenuItem>
-        );
-    }
-    return items;
-  };
+  const getMenuItem = () =>
+    Object.values(BookType).map((k, index) => (
+      <MenuItem key={index} value={k}>
+        {k}
+      </MenuItem>
+    ));
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
@@ -121,7 +114,7 @@ const EditBook = ({ selected, select }: props) => {
           labelId="select-label"
           id="select"
           value={type}
-          onChange={(e) => setType(Number(e.target.value))}
+          onChange={(e) => setType(e.target.value as BookType)}
         >
           {getMenuItem()}
         </Select>
