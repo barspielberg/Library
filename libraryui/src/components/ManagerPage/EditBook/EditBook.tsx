@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Fab,
+  FormControl,
   InputAdornment,
+  InputLabel,
   makeStyles,
+  Select,
   Tab,
   Tabs,
   TextField,
+  MenuItem,
 } from "@material-ui/core";
 import MomentUtils from "@date-io/moment";
 import {
@@ -17,6 +21,7 @@ import SaveIcon from "@material-ui/icons/SaveOutlined";
 import AddIcon from "@material-ui/icons/Add";
 import Book from "../../../models/Book";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
+import BookType from "../../../models/BookType";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,12 +35,16 @@ const useStyles = makeStyles((theme) => ({
       margin: "0.5rem",
     },
   },
+  formControl: {
+    margin: "0.5rem 2rem",
+    minWidth: 120,
+  },
 }));
 
 type props = {
-  selected: Book,
-  select: (book: Book) => void
-}
+  selected: Book;
+  select: (book: Book) => void;
+};
 
 const EditBook = ({ selected, select }: props) => {
   const classes = useStyles();
@@ -43,20 +52,37 @@ const EditBook = ({ selected, select }: props) => {
   const [isNew, setIsNew] = useState(true);
 
   const [id, setId] = useState(selected.id);
+  const [type, setType] = useState(selected.type);
   const [title, setTitle] = useState(selected.title);
   const [author, setAuthor] = useState(selected.author);
-  const [publishDate, setPublishDate] = useState<Date | MaterialUiPickersDate>(selected.publishDate || new Date());
+  const [publishDate, setPublishDate] = useState<Date | MaterialUiPickersDate>(
+    selected.publishDate
+  );
   const [price, setPrice] = useState(selected.price);
 
   useEffect(() => {
-    setId(selected.id || "");
-    setTitle(selected.title || "");
-    setAuthor(selected.author || "");
-    setPrice(selected.price || 0);
-    setPublishDate(selected.publishDate || null);
+    setId(selected.id);
+    setType(selected.type);
+    setTitle(selected.title);
+    setAuthor(selected.author);
+    setPrice(selected.price);
+    setPublishDate(selected.publishDate);
   }, [setId, setTitle, setAuthor, setPublishDate, setPrice, selected]);
 
   useEffect(() => setIsNew(!selected.id), [setIsNew, selected]);
+
+  const getMenuItem = () => {
+    const items = [];
+    for (const val in BookType) {
+      if (!isNaN(Number(val)))
+        items.push(
+          <MenuItem key={val} value={val}>
+            {BookType[val]}
+          </MenuItem>
+        );
+    }
+    return items;
+  };
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
@@ -88,6 +114,18 @@ const EditBook = ({ selected, select }: props) => {
           }}
         />
       )}
+
+      <FormControl className={classes.formControl}>
+        <InputLabel id="select-label">Age</InputLabel>
+        <Select
+          labelId="select-label"
+          id="select"
+          value={type}
+          onChange={(e) => setType(Number(e.target.value))}
+        >
+          {getMenuItem()}
+        </Select>
+      </FormControl>
       <TextField
         required
         id="title"
