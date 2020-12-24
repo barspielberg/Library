@@ -22,8 +22,10 @@ import AddIcon from "@material-ui/icons/Add";
 import Book from "../../../models/Book";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import BookType from "../../../models/BookType";
-import { postBook } from "../../../services/dataService";
 import { isDate, isMoment } from "moment";
+import { connect } from "react-redux";
+import { postBookAsync } from "../../../redux/actions/booksActions";
+import IBookData from "../../../models/IBookData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,9 +48,10 @@ const useStyles = makeStyles((theme) => ({
 type props = {
   selected: Book;
   select: (book: Book) => void;
+  postBook: (type: BookType, bookdata: IBookData) => void;
 };
 
-const EditBook = ({ selected, select }: props) => {
+const EditBook = ({ selected, select, postBook }: props) => {
   const classes = useStyles();
 
   const [isNew, setIsNew] = useState(true);
@@ -204,4 +207,9 @@ const EditBook = ({ selected, select }: props) => {
   );
 };
 
-export default EditBook;
+const mapDispatch = {
+  postBook: (type: BookType, bookdata: IBookData) =>
+    postBookAsync(type, bookdata),
+};
+
+export default connect(null, mapDispatch)(EditBook);

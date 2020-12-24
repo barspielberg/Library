@@ -5,14 +5,15 @@ import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import App from "./components/App";
 import "./index.css";
-import mainReducer from "./redux/reducers/mainReducer";
+import { rootReducer } from "./redux/reducers/mainReducer";
 
 import reportWebVitals from "./reportWebVitals";
 
-const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
-  mainReducer,
+  rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
 

@@ -3,7 +3,9 @@ import { ColDef, DataGrid, RowId } from "@material-ui/data-grid";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import Book from "../../../models/Book";
 import BookType from "../../../models/BookType";
-import { getBooks } from "../../../services/dataService";
+import { connect } from "react-redux";
+import { RootState } from "../../../redux/reducers/mainReducer";
+import { getBooksAsync } from "../../../redux/actions/booksActions";
 
 const columns: ColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
@@ -11,7 +13,6 @@ const columns: ColDef[] = [
     field: "type",
     headerName: "Type",
     width: 120,
-    // valueFormatter: (params) => BookType[Number(params.value)],
   },
   { field: "title", headerName: "Title", width: 120 },
   { field: "author", headerName: "Author", width: 120 },
@@ -24,11 +25,6 @@ const columns: ColDef[] = [
   { field: "price", headerName: "Price", width: 70 },
 ];
 
-// const rows = [
-//   new Book("5", "book1", "Jon", new Date(), 32.2, BookType.Magazine),
-//   new Book("2", "book2", "Jon", new Date("1.1.98"), 35, BookType.StudyBook),
-//   new Book("3", "book3", "Jon", new Date("4/8/21"), 11.5, BookType.Novel),
-// ];
 const btnStyle: CSSProperties = {
   position: "absolute",
   bottom: "0.5rem",
@@ -41,15 +37,16 @@ const btnStyle: CSSProperties = {
 
 type props = {
   select: (book: Book) => void;
+  books: Book[];
+  getBooks: (type: BookType) => void;
 };
 
-const DataTable = ({ select }: props) => {
+const DataTable = ({ select, books, getBooks }: props) => {
   const [selcetedBooks, setSelectedBooks] = useState<RowId[]>([]);
-  const [rows, setRows] = useState<Book[]>([]);
 
   useEffect(() => {
-    getBooks(BookType.Magazine).then((r) => setRows(r));
-  }, [setRows]);
+    getBooks(BookType.Magazine);
+  }, [getBooks]);
 
   const deleteHandler = () => {
     console.log(selcetedBooks);
@@ -58,7 +55,7 @@ const DataTable = ({ select }: props) => {
   return (
     <div style={{ height: 400, width: 750, backgroundColor: "#424242" }}>
       <DataGrid
-        rows={rows}
+        rows={books}
         columns={columns}
         pageSize={5}
         checkboxSelection
@@ -74,4 +71,12 @@ const DataTable = ({ select }: props) => {
   );
 };
 
-export default DataTable;
+const mapState = (state: RootState) => ({
+  books: state.books,
+});
+
+const mapDispatch = {
+  getBooks: (type: BookType) => getBooksAsync(type),
+};
+
+export default connect(mapState, mapDispatch)(DataTable);
