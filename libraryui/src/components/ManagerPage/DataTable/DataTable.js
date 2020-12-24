@@ -49,6 +49,7 @@ const btnStyle = {
   color: "white",
   background: "transparent",
   border: "none",
+  cursor:"pointer",
 };
 const DataTable = ({ select }) => {
   const [selcetedBooks, setSelectedBooks] = useState([]);
