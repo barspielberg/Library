@@ -61,3 +61,21 @@ export const postBook = (
       );
   });
 };
+export const putBook = (type: BookType, bookData: IBookData): Promise<Book> => {
+  return new Promise((res, rej) => {
+    axios
+      .put<IBookData>("/" + gteStringType(type) + "/" + bookData.id, bookData)
+      .then((r) =>
+        res(
+          new Book(
+            r.data.id,
+            r.data.title,
+            r.data.author,
+            new Date(r.data.publishDate),
+            r.data.price,
+            type
+          )
+        )
+      );
+  });
+};

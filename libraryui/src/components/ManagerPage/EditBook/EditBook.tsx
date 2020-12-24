@@ -24,7 +24,10 @@ import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import BookType from "../../../models/BookType";
 import { isDate, isMoment } from "moment";
 import { connect } from "react-redux";
-import { postBookAsync } from "../../../redux/actions/booksActions";
+import {
+  postBookAsync,
+  putBookAsync,
+} from "../../../redux/actions/booksActions";
 import IBookData from "../../../models/IBookData";
 
 const useStyles = makeStyles((theme) => ({
@@ -49,9 +52,10 @@ type props = {
   selected: Book;
   select: (book: Book) => void;
   postBook: (type: BookType, bookdata: IBookData) => void;
+  putBook: (type: BookType, bookdata: IBookData) => void;
 };
 
-const EditBook = ({ selected, select, postBook }: props) => {
+const EditBook = ({ selected, select, postBook, putBook }: props) => {
   const classes = useStyles();
 
   const [isNew, setIsNew] = useState(true);
@@ -83,19 +87,24 @@ const EditBook = ({ selected, select, postBook }: props) => {
     ));
 
   const onSubmitHandler = () => {
-    if (isNew) {
-      let date: Date;
-      if (isDate(publishDate)) date = publishDate as Date;
-      else if (isMoment(publishDate))
-        date = (publishDate as moment.Moment).toDate();
-      else date = new Date();
+    let date: Date;
+    if (isDate(publishDate)) date = publishDate as Date;
+    else if (isMoment(publishDate))
+      date = (publishDate as moment.Moment).toDate();
+    else date = new Date();
 
-      postBook(type, {
-        title,
-        author,
-        price,
-        publishDate: date,
-      });
+    const data: IBookData = {
+      title,
+      author,
+      price,
+      publishDate: date,
+    };
+
+    if (isNew) {
+      postBook(type, data);
+    } else {
+      data.id = id.toString();
+      putBook(type, data);
     }
     select(new Book());
   };
@@ -211,6 +220,8 @@ const EditBook = ({ selected, select, postBook }: props) => {
 const mapDispatch = {
   postBook: (type: BookType, bookdata: IBookData) =>
     postBookAsync(type, bookdata),
+  putBook: (type: BookType, bookdata: IBookData) =>
+    putBookAsync(type, bookdata),
 };
 
 export default connect(null, mapDispatch)(EditBook);

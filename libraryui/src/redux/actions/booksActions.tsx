@@ -13,20 +13,33 @@ type AppThunk<ReturnType = void> = ThunkAction<
 >;
 
 export const ADD_BOOKS = "ADD_BOOKS";
+export const UPDATE_BOOK = "UPDATE_BOOK";
 export const CLEAR_ALL_BOOKS = "CLEAR_ALL_BOOKS";
 
 interface AddBooksAction {
   type: typeof ADD_BOOKS;
   books: Book[];
 }
+interface UpdateBooksAction {
+  type: typeof UPDATE_BOOK;
+  book: Book;
+}
 interface ClearAllBooks {
   type: typeof CLEAR_ALL_BOOKS;
 }
-export type BookActionTypes = AddBooksAction | ClearAllBooks;
+export type BookActionTypes =
+  | AddBooksAction
+  | UpdateBooksAction
+  | ClearAllBooks;
 
 const addBooks = (books: Book[]): BookActionTypes => ({
   type: ADD_BOOKS,
   books,
+});
+
+const updateBook = (book: Book): BookActionTypes => ({
+  type: UPDATE_BOOK,
+  book,
 });
 
 export const clearAll = (): BookActionTypes => ({ type: CLEAR_ALL_BOOKS });
@@ -36,6 +49,12 @@ export const postBookAsync = (
   bookData: IBookData
 ): AppThunk => (dispatch) => {
   DataService.postBook(bookType, bookData).then((b) => dispatch(addBooks([b])));
+};
+export const putBookAsync = (
+  bookType: BookType,
+  bookData: IBookData
+): AppThunk => (dispatch) => {
+  DataService.putBook(bookType, bookData).then((b) => dispatch(updateBook(b)));
 };
 
 export const getBooksAsync = (type: BookType): AppThunk => (dispatch) => {
