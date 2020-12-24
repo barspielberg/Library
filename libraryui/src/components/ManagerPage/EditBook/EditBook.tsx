@@ -97,6 +97,7 @@ const EditBook = ({ selected, select, postBook }: props) => {
         publishDate: date,
       });
     }
+    select(new Book());
   };
 
   return (
