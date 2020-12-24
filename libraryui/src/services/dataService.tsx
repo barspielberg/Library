@@ -1,16 +1,9 @@
 import axios from "axios";
 import Book from "../models/Book";
 import BookType from "../models/BookType";
+import IBookData from "../models/IBookData";
 
 axios.defaults.baseURL = "https://localhost:44381/api/";
-
-interface IBookData {
-  id?: string;
-  title: string;
-  author: string;
-  publishDate: string | Date;
-  price: number;
-}
 
 const gteStringType = (type: BookType): string => {
   switch (type) {
