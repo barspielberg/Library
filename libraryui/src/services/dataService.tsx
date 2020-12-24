@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import Book from "../models/Book";
 import BookType from "../models/BookType";
 import IBookData from "../models/IBookData";
@@ -79,3 +79,8 @@ export const putBook = (type: BookType, bookData: IBookData): Promise<Book> => {
       );
   });
 };
+export const deleteBooks = (
+  type: BookType,
+  ids: string[]
+): Promise<AxiosResponse<any>> =>
+  axios.delete("/" + gteStringType(type), { data: ids });

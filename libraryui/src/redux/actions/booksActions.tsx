@@ -4,10 +4,11 @@ import Book from "../../models/Book";
 import BookType from "../../models/BookType";
 import IBookData from "../../models/IBookData";
 import * as DataService from "../../services/dataService";
+import { RootState } from "../reducers/mainReducer";
 
 type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
-  Book[],
+  RootState,
   unknown,
   Action<string>
 >;
