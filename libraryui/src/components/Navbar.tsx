@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Navbar = () => {
+const Navbar:React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const [value, setValue] = useState(history.location.pathname);

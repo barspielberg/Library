@@ -9,10 +9,7 @@ import mainReducer from "./redux/reducers/mainReducer";
 
 import reportWebVitals from "./reportWebVitals";
 
-const composeEnhancers =
-  (typeof window !== "undefined" &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-  compose;
+const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   mainReducer,

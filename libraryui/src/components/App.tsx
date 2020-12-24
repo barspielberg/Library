@@ -1,6 +1,6 @@
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { blue, green } from "@material-ui/core/colors";
-import { React } from "react";
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage/HomePage";
 import ManagerPage from "./ManagerPage/ManagerPage";
@@ -18,7 +18,7 @@ const theme = createMuiTheme({
   },
 });
 
-function App() {
+const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>

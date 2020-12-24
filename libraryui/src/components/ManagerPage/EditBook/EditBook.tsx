@@ -15,6 +15,8 @@ import {
 } from "@material-ui/pickers";
 import SaveIcon from "@material-ui/icons/SaveOutlined";
 import AddIcon from "@material-ui/icons/Add";
+import Book from "../../../models/Book";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditBook = ({ selected, select }) => {
+type props = {
+  selected: Book,
+  select: (book: Book) => void
+}
+
+const EditBook = ({ selected, select }: props) => {
   const classes = useStyles();
 
   const [isNew, setIsNew] = useState(true);
@@ -38,14 +45,14 @@ const EditBook = ({ selected, select }) => {
   const [id, setId] = useState(selected.id);
   const [title, setTitle] = useState(selected.title);
   const [author, setAuthor] = useState(selected.author);
-  const [publishDate, setPublishDate] = useState(selected.publishDate);
+  const [publishDate, setPublishDate] = useState<Date | MaterialUiPickersDate>(selected.publishDate || new Date());
   const [price, setPrice] = useState(selected.price);
 
   useEffect(() => {
     setId(selected.id || "");
     setTitle(selected.title || "");
     setAuthor(selected.author || "");
-    setPrice(selected.price || "");
+    setPrice(selected.price || 0);
     setPublishDate(selected.publishDate || null);
   }, [setId, setTitle, setAuthor, setPublishDate, setPrice, selected]);
 
@@ -56,7 +63,7 @@ const EditBook = ({ selected, select }) => {
       <AppBar position="static" color="default">
         <Tabs
           value={isNew}
-          onChange={(e, v) => select({})}
+          onChange={(e, v) => select(new Book())}
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
@@ -135,7 +142,7 @@ const EditBook = ({ selected, select }) => {
           shrink: true,
         }}
         onChange={(e) => {
-          setPrice(e.target.value);
+          setPrice(+e.target.value);
         }}
       />
       <div style={{ display: "flex", flexDirection: "row-reverse" }}>
