@@ -109,7 +109,7 @@ const EditBook = ({ selected, select }: props) => {
       )}
 
       <FormControl className={classes.formControl}>
-        <InputLabel id="select-label">Age</InputLabel>
+        <InputLabel id="select-label">Type</InputLabel>
         <Select
           labelId="select-label"
           id="select"
