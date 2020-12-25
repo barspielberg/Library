@@ -13,37 +13,30 @@ type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-export const ADD_BOOKS = "ADD_BOOKS";
-export const UPDATE_BOOK = "UPDATE_BOOK";
-export const CLEAR_ALL_BOOKS = "CLEAR_ALL_BOOKS";
-
-interface AddBooksAction {
-  type: typeof ADD_BOOKS;
-  books: Book[];
-}
-interface UpdateBooksAction {
-  type: typeof UPDATE_BOOK;
-  book: Book;
-}
-interface ClearAllBooks {
-  type: typeof CLEAR_ALL_BOOKS;
-}
 export type BookActionTypes =
-  | AddBooksAction
-  | UpdateBooksAction
-  | ClearAllBooks;
+  | {
+      type: "ADD_BOOKS";
+      books: Book[];
+    }
+  | {
+      type: "UPDATE_BOOK";
+      book: Book;
+    }
+  | {
+      type: "CLEAR_ALL_BOOKS";
+    };
 
 const addBooks = (books: Book[]): BookActionTypes => ({
-  type: ADD_BOOKS,
+  type: "ADD_BOOKS",
   books,
 });
 
 const updateBook = (book: Book): BookActionTypes => ({
-  type: UPDATE_BOOK,
+  type: "UPDATE_BOOK",
   book,
 });
 
-export const clearAll = (): BookActionTypes => ({ type: CLEAR_ALL_BOOKS });
+export const clearAll = (): BookActionTypes => ({ type: "CLEAR_ALL_BOOKS" });
 
 export const postBookAsync = (
   bookType: BookType,
