@@ -13,11 +13,7 @@ import {
 
 const columns: ColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
-  {
-    field: "type",
-    headerName: "Type",
-    width: 120,
-  },
+  { field: "type", headerName: "Type", width: 120 },
   { field: "title", headerName: "Title", width: 120 },
   { field: "author", headerName: "Author", width: 120 },
   {
@@ -26,7 +22,7 @@ const columns: ColDef[] = [
     type: "date",
     width: 150,
   },
-  { field: "price", headerName: "Price", width: 70 },
+  { field: "price", headerName: "Price ($)", width: 90 },
 ];
 
 const btnStyle: CSSProperties = {
@@ -59,10 +55,13 @@ const DataTable = ({
   useEffect(() => {
     clearBooks();
     getBooks(BookType.Magazine);
+    getBooks(BookType.Novel);
+    getBooks(BookType.StudyBook);
   }, [clearBooks, getBooks]);
 
   const deleteHandler = () => {
     deleteBooks(selcetedBooks.map((i) => i.toString()));
+    setSelectedBooks([]);
   };
 
   return (
