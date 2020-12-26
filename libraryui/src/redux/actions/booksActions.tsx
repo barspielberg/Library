@@ -24,6 +24,10 @@ export type BookActionTypes =
     }
   | {
       type: "CLEAR_ALL_BOOKS";
+    }
+  | {
+      type: "DELETE_BOOKS";
+      ids: string[];
     };
 
 const addBooks = (books: Book[]): BookActionTypes => ({
@@ -34,6 +38,11 @@ const addBooks = (books: Book[]): BookActionTypes => ({
 const updateBook = (book: Book): BookActionTypes => ({
   type: "UPDATE_BOOK",
   book,
+});
+
+const deleteBooks = (ids: string[]): BookActionTypes => ({
+  type: "DELETE_BOOKS",
+  ids,
 });
 
 export const clearAll = (): BookActionTypes => ({ type: "CLEAR_ALL_BOOKS" });
@@ -53,4 +62,28 @@ export const putBookAsync = (
 
 export const getBooksAsync = (type: BookType): AppThunk => (dispatch) => {
   DataService.getBooks(type).then((b) => dispatch(addBooks(b)));
+};
+
+export const deleteBooksAsnc = (ids: string[]): AppThunk => async (
+  dispatch,
+  getState
+) => {
+  const { books } = getState();
+  const dictionary: { [type in BookType]: string[] } = {
+    Magazine: [],
+    Novel: [],
+    "Study Book": [],
+  };
+
+  for (const id of ids) {
+    const t = books.find((b) => b.id === id)?.type;
+    if (t) dictionary[t].push(id);
+  }
+
+  for (const key in dictionary) {
+    const type = key as BookType;
+    const ids = dictionary[type];
+    if (ids.length > 0) await DataService.deleteBooks(type, ids);
+  }
+  dispatch(deleteBooks(ids));
 };

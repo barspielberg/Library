@@ -5,7 +5,11 @@ import Book from "../../../models/Book";
 import BookType from "../../../models/BookType";
 import { connect } from "react-redux";
 import { RootState } from "../../../redux/reducers/mainReducer";
-import { getBooksAsync } from "../../../redux/actions/booksActions";
+import {
+  clearAll,
+  deleteBooksAsnc,
+  getBooksAsync,
+} from "../../../redux/actions/booksActions";
 
 const columns: ColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
@@ -39,17 +43,26 @@ type props = {
   select: (book: Book) => void;
   books: Book[];
   getBooks: (type: BookType) => void;
+  clearBooks: () => void;
+  deleteBooks: (ids: string[]) => void;
 };
 
-const DataTable = ({ select, books, getBooks }: props) => {
+const DataTable = ({
+  select,
+  books,
+  getBooks,
+  clearBooks,
+  deleteBooks,
+}: props) => {
   const [selcetedBooks, setSelectedBooks] = useState<RowId[]>([]);
 
   useEffect(() => {
+    clearBooks();
     getBooks(BookType.Magazine);
-  }, [getBooks]);
+  }, [clearBooks, getBooks]);
 
   const deleteHandler = () => {
-    console.log(selcetedBooks);
+    deleteBooks(selcetedBooks.map((i) => i.toString()));
   };
 
   return (
@@ -77,6 +90,8 @@ const mapState = (state: RootState) => ({
 
 const mapDispatch = {
   getBooks: (type: BookType) => getBooksAsync(type),
+  clearBooks: () => clearAll(),
+  deleteBooks: (ids: string[]) => deleteBooksAsnc(ids),
 };
 
 export default connect(mapState, mapDispatch)(DataTable);
