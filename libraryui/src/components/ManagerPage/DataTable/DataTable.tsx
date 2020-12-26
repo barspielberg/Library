@@ -1,6 +1,7 @@
 import React, { CSSProperties, useEffect, useState } from "react";
 import { ColDef, DataGrid, RowId } from "@material-ui/data-grid";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import IconButton from "@material-ui/core/IconButton";
 import Book from "../../../models/Book";
 import BookType from "../../../models/BookType";
 import { connect } from "react-redux";
@@ -27,12 +28,8 @@ const columns: ColDef[] = [
 
 const btnStyle: CSSProperties = {
   position: "absolute",
-  bottom: "0.5rem",
-  left: "8rem",
-  color: "white",
-  background: "transparent",
-  border: "none",
-  cursor: "pointer",
+  bottom: "0.2rem",
+  left: "7.5rem",
 };
 
 type props = {
@@ -75,9 +72,13 @@ const DataTable = ({
         onRowClick={(params) => select(params.row as Book)}
       />
       {selcetedBooks.length > 0 && (
-        <button style={btnStyle} onClick={deleteHandler}>
+        <IconButton
+          aria-label="DeleteForever"
+          style={btnStyle}
+          onClick={deleteHandler}
+        >
           <DeleteForeverIcon />
-        </button>
+        </IconButton>
       )}
     </div>
   );
