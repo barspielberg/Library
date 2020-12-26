@@ -40,13 +40,13 @@ type props = {
   deleteBooks: (ids: string[]) => void;
 };
 
-const DataTable = ({
+const DataTable: React.FC<props> = ({
   select,
   books,
   getBooks,
   clearBooks,
   deleteBooks,
-}: props) => {
+}) => {
   const [selcetedBooks, setSelectedBooks] = useState<RowId[]>([]);
 
   useEffect(() => {

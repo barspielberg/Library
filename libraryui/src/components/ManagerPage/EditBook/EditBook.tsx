@@ -55,7 +55,7 @@ type props = {
   putBook: (type: BookType, bookdata: IBookData) => void;
 };
 
-const EditBook = ({ selected, select, postBook, putBook }: props) => {
+const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
   const classes = useStyles();
 
   const [isNew, setIsNew] = useState(true);
