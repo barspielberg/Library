@@ -35,7 +35,6 @@ const useStyles = makeStyles({
 
 const App: React.FC = () => {
   const classes = useStyles();
-  console.log(theme);
 
   return (
     <ThemeProvider theme={theme}>

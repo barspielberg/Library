@@ -12,6 +12,7 @@ import {
   getBooksAsync,
 } from "../../../redux/actions/booksActions";
 import { makeStyles } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
 
 const columns: ColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
@@ -40,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     backgroundColor: theme.palette.background.paper,
+    border: "none",
+    "& .MuiDataGrid-colCellWrapper": {
+      backgroundColor: grey[900],
+    },
   },
 }));
 
