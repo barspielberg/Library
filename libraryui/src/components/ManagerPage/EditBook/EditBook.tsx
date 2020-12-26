@@ -32,7 +32,7 @@ import IBookData from "../../../models/IBookData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#424242",
+    backgroundColor: theme.palette.background.paper,
     display: "flex",
     flexDirection: "column",
     "& .MuiTextField-root": {

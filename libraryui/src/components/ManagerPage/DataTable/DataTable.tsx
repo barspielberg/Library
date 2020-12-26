@@ -11,6 +11,7 @@ import {
   deleteBooksAsnc,
   getBooksAsync,
 } from "../../../redux/actions/booksActions";
+import { makeStyles } from "@material-ui/core";
 
 const columns: ColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
@@ -32,6 +33,16 @@ const btnStyle: CSSProperties = {
   left: "7.5rem",
 };
 
+const useStyles = makeStyles((theme) => ({
+  raper: {
+    height: 400,
+    width: 750,
+  },
+  table: {
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
 interface props {
   select: (book: Book) => void;
   books: Book[];
@@ -48,6 +59,7 @@ const DataTable: React.FC<props> = ({
   deleteBooks,
 }) => {
   const [selcetedBooks, setSelectedBooks] = useState<RowId[]>([]);
+  const classes = useStyles();
 
   useEffect(() => {
     clearBooks();
@@ -62,8 +74,9 @@ const DataTable: React.FC<props> = ({
   };
 
   return (
-    <div style={{ height: 400, width: 750, backgroundColor: "#424242" }}>
+    <div className={classes.raper}>
       <DataGrid
+        className={classes.table}
         rows={books}
         columns={columns}
         pageSize={5}

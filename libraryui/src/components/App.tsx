@@ -15,6 +15,9 @@ const theme = createMuiTheme({
     secondary: {
       main: green[600],
     },
+    background: {
+      paper: "#4c4c4c",
+    },
   },
 });
 
@@ -32,6 +35,8 @@ const useStyles = makeStyles({
 
 const App: React.FC = () => {
   const classes = useStyles();
+  console.log(theme);
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
