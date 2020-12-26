@@ -32,13 +32,13 @@ const btnStyle: CSSProperties = {
   left: "7.5rem",
 };
 
-type props = {
+interface props {
   select: (book: Book) => void;
   books: Book[];
   getBooks: (type: BookType) => void;
   clearBooks: () => void;
   deleteBooks: (ids: string[]) => void;
-};
+}
 
 const DataTable: React.FC<props> = ({
   select,

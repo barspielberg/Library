@@ -9,6 +9,7 @@ import Book from "../../models/Book";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { CardMedia } from "@material-ui/core";
+import BookType from "../../models/BookType";
 
 const useStyles = makeStyles({
   root: {
@@ -26,10 +27,23 @@ const useStyles = makeStyles({
     direction: "rtl",
   },
   media: {
-    height: 0,
-    paddingTop: "100%",
+    height: "20rem",
   },
 });
+
+const getImage = (type: BookType) => {
+  switch (type) {
+    case BookType.Magazine:
+      return "https://img.timeinc.net/time/images/covers/europe/2013/20131028_600.jpg";
+    case BookType.StudyBook:
+      return "https://www.pearsonhighered.com/assets/bigcovers/0/3/2/1/032151307X.jpg";
+    case BookType.Novel:
+      return "https://assets.theickabog.com/wp-content/uploads/2020/07/Ickabog_Homepage_Hero_US.jpg";
+
+    default:
+      return "";
+  }
+};
 
 interface IBookCardProps {
   book: Book;
@@ -52,7 +66,7 @@ const BookCard: React.FC<IBookCardProps> = ({ book }) => {
         </Typography>
         <CardMedia
           className={classes.media}
-          image="https://assets.theickabog.com/wp-content/uploads/2020/07/Ickabog_Homepage_Hero_US.jpg"
+          image={getImage(book.type)}
           title={book.title}
         />
         <Typography className={classes.price} color="textSecondary">
