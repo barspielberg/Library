@@ -23,7 +23,6 @@ const theme = createMuiTheme({
 });
 
 const App: React.FC = () => {
-  //TODO cart page
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>

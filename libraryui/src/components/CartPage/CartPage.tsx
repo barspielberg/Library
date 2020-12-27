@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import Book from "../../models/Book";
+import CartItem from "../../models/CartItem";
 import { RootState } from "../../redux/reducers/mainReducer";
 
 interface ICartPageProps {
-  items: Book[];
+  items: CartItem[];
 }
 
 const CartPage: React.FC<ICartPageProps> = ({ items }) => {

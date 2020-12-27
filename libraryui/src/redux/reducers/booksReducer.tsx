@@ -3,7 +3,10 @@ import { BookActionTypes } from "../actions/booksActions";
 
 const initialState: Book[] = [];
 
-const booksReducer = (state = initialState, action: BookActionTypes) => {
+const booksReducer = (
+  state = initialState,
+  action: BookActionTypes
+): Book[] => {
   switch (action.type) {
     case "ADD_BOOKS":
       return [...state, ...action.books];

@@ -1,14 +1,33 @@
-import Book from "../../models/Book";
+import CartItem from "../../models/CartItem";
 import { cartActionTypes } from "../actions/cartActions";
 
-const initialState: Book[] = [];
+const initialState: CartItem[] = [];
 
-const cartReducer = (state = initialState, action: cartActionTypes) => {
+const cartReducer = (
+  state = initialState,
+  action: cartActionTypes
+): CartItem[] => {
   switch (action.type) {
     case "ADD_TO_CART":
-      return [...state, action.book];
+      const addItem = state.find((i) => i.book.id === action.book.id);
+      if (addItem) {
+        return [
+          ...state.filter((i) => i.book.id !== action.book.id),
+          { ...addItem, amount: addItem.amount + 1 },
+        ];
+      }
+      return [...state, new CartItem(action.book)];
+    case "SUBTRACT_FROM_CART":
+      const subItem = state.find((i) => i.book.id === action.book.id);
+      if (subItem) {
+        return [
+          ...state.filter((i) => i.book.id !== action.book.id),
+          { ...subItem, amount: subItem.amount - 1 },
+        ];
+      }
+      return [...state, new CartItem(action.book)];
     case "REMOVE_FROM_CART":
-      return state.filter((b) => b.id !== action.book.id);
+      return state.filter((b) => b.book.id !== action.book.id);
     case "CLEAR_CART":
       return [];
 

@@ -15,9 +15,9 @@ import InputBase from "@material-ui/core/InputBase";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/reducers/mainReducer";
 import { Badge } from "@material-ui/core";
-import Book from "../../models/Book";
 import MenuBtn from "./MenuBtn";
 import { useHistory } from "react-router";
+import CartItem from "../../models/CartItem";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface ITopBarProps {
-  cart: Book[];
+  cart: CartItem[];
 }
 
 const TopBar: React.FC<ITopBarProps> = ({ cart }) => {
@@ -113,7 +113,10 @@ const TopBar: React.FC<ITopBarProps> = ({ cart }) => {
           aria-label="ShoppingCart"
           onClick={() => history.push("/cart")}
         >
-          <Badge badgeContent={cart.length} color="secondary">
+          <Badge
+            badgeContent={cart.reduce((prv, i) => prv + i.amount, 0)}
+            color="secondary"
+          >
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
