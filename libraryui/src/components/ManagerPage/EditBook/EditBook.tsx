@@ -262,7 +262,7 @@ const EditBook: React.FC<props> = ({
     </form>
   );
 };
-
+//TODO add image
 const mapDispatch = {
   postBook: (type: BookType, bookdata: IBookData) =>
     postBookAsync(type, bookdata),

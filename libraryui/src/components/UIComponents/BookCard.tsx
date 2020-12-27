@@ -46,6 +46,7 @@ const getImage = (type: BookType) => {
       return "";
   }
 };
+//TODO discount bage and price
 
 interface IBookCardProps {
   book: Book;
@@ -80,9 +81,13 @@ const BookCard: React.FC<IBookCardProps> = ({ book, addToCart }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => addToCart(book)}>
+        <Button
+          size="small"
+          onClick={() => addToCart(book)}
+          disabled={book.inStock <= 0}
+        >
           <AddShoppingCartIcon />
-          add to cart
+          {book.inStock > 0 ? "add to cart" : "out of stock"}
         </Button>
       </CardActions>
     </Card>

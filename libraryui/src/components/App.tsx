@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 const App: React.FC = () => {
   const classes = useStyles();
-
+  //TODO cart page
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
