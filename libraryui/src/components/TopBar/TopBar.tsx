@@ -13,9 +13,10 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import { connect } from "react-redux";
-import { RootState } from "../redux/reducers/mainReducer";
+import { RootState } from "../../redux/reducers/mainReducer";
 import { Badge } from "@material-ui/core";
-import Book from "../models/Book";
+import Book from "../../models/Book";
+import MenuBtn from "./MenuBtn";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     grow: {
       flexGrow: 1,
     },
-    cartBtn: {
+    menuButton: {
       marginRight: theme.spacing(2),
     },
     title: {
@@ -85,6 +86,7 @@ const TopBar: React.FC<ITopBarProps> = ({ cart }) => {
   return (
     <AppBar position="static" className={classes.root}>
       <Toolbar>
+        <MenuBtn />
         <Typography variant="h6" className={classes.title}>
           The Library
         </Typography>
@@ -104,7 +106,7 @@ const TopBar: React.FC<ITopBarProps> = ({ cart }) => {
         <div className={classes.grow} />
         <IconButton
           edge="end"
-          className={classes.cartBtn}
+          className={classes.menuButton}
           color="inherit"
           aria-label="ShoppingCart"
         >

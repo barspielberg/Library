@@ -47,6 +47,7 @@ const getImage = (type: BookType) => {
   }
 };
 //TODO discount bage and price
+//TODO display uppercase first char
 
 interface IBookCardProps {
   book: Book;

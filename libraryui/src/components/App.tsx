@@ -1,11 +1,10 @@
-import { createMuiTheme, makeStyles, ThemeProvider } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { blue, green } from "@material-ui/core/colors";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import TopBar from "./TopBar";
+import TopBar from "./TopBar/TopBar";
 import HomePage from "./HomePage/HomePage";
 import ManagerPage from "./ManagerPage/ManagerPage";
-import Navbar from "./Navbar";
 
 const theme = createMuiTheme({
   palette: {
@@ -22,20 +21,7 @@ const theme = createMuiTheme({
   },
 });
 
-const useStyles = makeStyles({
-  navbar: {
-    position: "fixed",
-    bottom: "0",
-    width: "100%",
-    zIndex: 100,
-  },
-  footer: {
-    height: "4rem",
-  },
-});
-
 const App: React.FC = () => {
-  const classes = useStyles();
   //TODO cart page
   return (
     <ThemeProvider theme={theme}>
@@ -48,10 +34,6 @@ const App: React.FC = () => {
               <Route path="/" component={HomePage} />
             </Switch>
           </section>
-          <nav className={classes.navbar}>
-            <Navbar />
-          </nav>
-          <footer className={classes.footer} />
         </div>
       </BrowserRouter>
     </ThemeProvider>
