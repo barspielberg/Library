@@ -75,6 +75,9 @@ const BookCard: React.FC<IBookCardProps> = ({ book, addToCart }) => {
         <Typography className={classes.price} color="textSecondary">
           price: {book.price}$
         </Typography>
+        <Typography className={classes.author} color="textSecondary">
+          Publish At: {book.publishDate.toLocaleDateString()}
+        </Typography>
       </CardContent>
       <CardActions>
         <Button size="small" onClick={() => addToCart(book)}>

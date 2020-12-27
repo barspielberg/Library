@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flex: 1,
     minWidth: 400,
-    maxWidth: 800,
+    maxWidth: 700,
     flexDirection: "column",
     "& .MuiTextField-root": {
       margin: "0.5rem 2rem",
@@ -67,9 +67,9 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
   const classes = useStyles();
 
   const [isNew, setIsNew] = useState(true);
-  const [type, setType] = useState(selected.type);
   const [valid, setValid] = useState(false);
 
+  const [type, setType] = useState(selected.type);
   const [bookData, setBookData] = useState<IBookData>({
     id: selected.id.toString() || undefined,
     title: selected.title,
@@ -223,7 +223,7 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
         label="Price"
         type="number"
         InputProps={{
-          startAdornment: <InputAdornment position="start">$</InputAdornment>,
+          endAdornment: <InputAdornment position="end">$</InputAdornment>,
         }}
         value={bookData.price}
         error={!validate.above0(bookData.price)}
@@ -253,6 +253,9 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
             ? ""
             : "Discount cannot be above 100% or below 0"
         }
+        InputProps={{
+          endAdornment: <InputAdornment position="end">%</InputAdornment>,
+        }}
         value={bookData.discount}
         onChange={(e) => {
           setBookData({ ...bookData, discount: +e.target.value });
