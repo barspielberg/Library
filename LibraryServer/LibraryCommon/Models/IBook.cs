@@ -11,6 +11,8 @@ namespace LibraryCommon.Models
         string Author { get; }
         DateTime PublishDate { get; }
         double Price { get; }
+        uint InStock { get; }
+        uint Discount { get; }
 
     }
 }

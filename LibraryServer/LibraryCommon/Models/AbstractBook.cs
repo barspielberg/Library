@@ -15,5 +15,9 @@ namespace LibraryCommon.Models
         public DateTime PublishDate { get; set; }
 
         public double Price { get; set; }
+
+        public uint InStock { get; set; }
+
+        public uint Discount { get; set; }
     }
 }

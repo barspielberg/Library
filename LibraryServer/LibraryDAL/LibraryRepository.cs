@@ -59,6 +59,8 @@ namespace LibraryDAL
                 dbBook.Title = book.Title;
                 dbBook.PublishDate = book.PublishDate;
                 dbBook.Author = book.Author;
+                dbBook.InStock = book.InStock;
+                dbBook.Discount = book.Discount;
 
                 await context.SaveChangesAsync();
                 return FindBook<T>(id); ;

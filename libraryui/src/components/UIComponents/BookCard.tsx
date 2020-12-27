@@ -10,6 +10,8 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { CardMedia } from "@material-ui/core";
 import BookType from "../../models/BookType";
+import { connect } from "react-redux";
+import { addToCart } from "../../redux/actions/cartActions";
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles({
   },
   author: {
     marginBottom: 12,
-    marginInlineStart: "0.5rem",
+    // marginInlineStart: "0.5rem",
     fontSize: 14,
   },
   price: {
@@ -47,9 +49,10 @@ const getImage = (type: BookType) => {
 
 interface IBookCardProps {
   book: Book;
+  addToCart: (book: Book) => void;
 }
 
-const BookCard: React.FC<IBookCardProps> = ({ book }) => {
+const BookCard: React.FC<IBookCardProps> = ({ book, addToCart }) => {
   const classes = useStyles();
   return (
     <Card className={classes.root} variant="outlined">
@@ -74,7 +77,7 @@ const BookCard: React.FC<IBookCardProps> = ({ book }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">
+        <Button size="small" onClick={() => addToCart(book)}>
           <AddShoppingCartIcon />
           add to cart
         </Button>
@@ -82,5 +85,7 @@ const BookCard: React.FC<IBookCardProps> = ({ book }) => {
     </Card>
   );
 };
-
-export default BookCard;
+const mapDispatch2Props = {
+  addToCart: (book: Book) => addToCart(book),
+};
+export default connect(null, mapDispatch2Props)(BookCard);

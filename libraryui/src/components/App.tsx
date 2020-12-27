@@ -2,6 +2,7 @@ import { createMuiTheme, makeStyles, ThemeProvider } from "@material-ui/core";
 import { blue, green } from "@material-ui/core/colors";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import TopBar from "./TopBar";
 import HomePage from "./HomePage/HomePage";
 import ManagerPage from "./ManagerPage/ManagerPage";
 import Navbar from "./Navbar";
@@ -40,6 +41,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <div>
+          <TopBar />
           <section>
             <Switch>
               <Route path="/manager" component={ManagerPage} />
