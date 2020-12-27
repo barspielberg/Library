@@ -22,7 +22,6 @@ import AddIcon from "@material-ui/icons/Add";
 import Book from "../../../models/Book";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import BookType from "../../../models/BookType";
-import { isDate, isMoment } from "moment";
 import { connect } from "react-redux";
 import {
   postBookAsync,
@@ -59,26 +58,32 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
   const classes = useStyles();
 
   const [isNew, setIsNew] = useState(true);
-
-  const [id, setId] = useState(selected.id);
   const [type, setType] = useState(selected.type);
-  const [title, setTitle] = useState(selected.title);
-  const [author, setAuthor] = useState(selected.author);
-  const [publishDate, setPublishDate] = useState<Date | MaterialUiPickersDate>(
-    selected.publishDate
-  );
-  const [price, setPrice] = useState(selected.price);
+
+  const [bookData, setBookData] = useState<IBookData>({
+    id: selected.id.toString() || undefined,
+    title: selected.title,
+    author: selected.author,
+    price: selected.price,
+    publishDate: selected.publishDate,
+    inStock: selected.inStock,
+    discount: selected.discount,
+  });
 
   useEffect(() => {
-    setId(selected.id);
-    setType(selected.type);
-    setTitle(selected.title);
-    setAuthor(selected.author);
-    setPrice(selected.price);
-    setPublishDate(selected.publishDate);
-  }, [setId, setTitle, setAuthor, setPublishDate, setPrice, selected]);
+    setBookData({
+      id: selected.id.toString() || undefined,
+      title: selected.title,
+      author: selected.author,
+      price: selected.price,
+      publishDate: selected.publishDate,
+      inStock: selected.inStock,
+      discount: selected.discount,
+    });
+  }, [setBookData, selected]);
 
   useEffect(() => setIsNew(!selected.id), [setIsNew, selected]);
+
   const getMenuItem = () =>
     Object.values(BookType).map((k, index) => (
       <MenuItem key={index} value={k}>
@@ -86,25 +91,15 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
       </MenuItem>
     ));
 
+  const onDateChange = (date: MaterialUiPickersDate) => {
+    setBookData({ ...bookData, publishDate: date?.toDate() || "" });
+  };
+
   const onSubmitHandler = () => {
-    let date: Date;
-    if (isDate(publishDate)) date = publishDate as Date;
-    else if (isMoment(publishDate))
-      date = (publishDate as moment.Moment).toDate();
-    else date = new Date();
-
-    const data: IBookData = {
-      title,
-      author,
-      price,
-      publishDate: date,
-    };
-
     if (isNew) {
-      postBook(type, data);
+      postBook(type, bookData);
     } else {
-      data.id = id.toString();
-      putBook(type, data);
+      putBook(type, bookData);
     }
     select(new Book());
   };
@@ -127,15 +122,15 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
         <TextField
           id="id"
           label="id"
-          value={id}
+          value={bookData.id}
           InputProps={{
             readOnly: true,
           }}
           InputLabelProps={{
-            shrink: !!id,
+            shrink: !!bookData.id,
           }}
           onChange={(e) => {
-            setId(e.target.value);
+            setBookData({ ...bookData, id: e.target.value || undefined });
           }}
         />
       )}
@@ -155,24 +150,24 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
         required
         id="title"
         label="Title"
-        value={title}
+        value={bookData.title}
         InputLabelProps={{
-          shrink: !!title,
+          shrink: !!bookData.title,
         }}
         onChange={(e) => {
-          setTitle(e.target.value);
+          setBookData({ ...bookData, title: e.target.value });
         }}
       />
       <TextField
         required
         id="author"
         label="Author"
-        value={author}
+        value={bookData.author}
         InputLabelProps={{
-          shrink: !!author,
+          shrink: !!bookData.author,
         }}
         onChange={(e) => {
-          setAuthor(e.target.value);
+          setBookData({ ...bookData, author: e.target.value });
         }}
       />
 
@@ -184,8 +179,8 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
           margin="normal"
           id="publishDate"
           label="Publish Date"
-          value={publishDate}
-          onChange={(date) => setPublishDate(date)}
+          value={bookData.publishDate}
+          onChange={(date) => onDateChange(date)}
           KeyboardButtonProps={{
             "aria-label": "change date",
           }}
@@ -200,12 +195,12 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
         InputProps={{
           startAdornment: <InputAdornment position="start">$</InputAdornment>,
         }}
-        value={price}
+        value={bookData.price}
         InputLabelProps={{
           shrink: true,
         }}
         onChange={(e) => {
-          setPrice(+e.target.value);
+          setBookData({ ...bookData, price: +e.target.value });
         }}
       />
       <div style={{ display: "flex", flexDirection: "row-reverse" }}>
