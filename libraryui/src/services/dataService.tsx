@@ -51,7 +51,7 @@ const gteStringType = (type: BookType): string => {
   }
 };
 
-const bookDataToBook = (data: IBookData, type: BookType): Book => {
+export const bookDataToBook = (data: IBookData, type: BookType): Book => {
   return new Book(
     data.id,
     data.title,

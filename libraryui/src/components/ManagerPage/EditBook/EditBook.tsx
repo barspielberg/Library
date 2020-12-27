@@ -57,43 +57,30 @@ const validate = {
 };
 
 type props = {
-  selected: Book;
   select: (book: Book) => void;
   postBook: (type: BookType, bookdata: IBookData) => void;
   putBook: (type: BookType, bookdata: IBookData) => void;
+  type: BookType;
+  bookData: IBookData;
+  setType: (t: BookType) => void;
+  setBookData: (b: IBookData) => void;
 };
 
-const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
+const EditBook: React.FC<props> = ({
+  select,
+  postBook,
+  putBook,
+  type,
+  bookData,
+  setType,
+  setBookData,
+}) => {
   const classes = useStyles();
 
   const [isNew, setIsNew] = useState(true);
   const [valid, setValid] = useState(false);
 
-  const [type, setType] = useState(selected.type);
-  const [bookData, setBookData] = useState<IBookData>({
-    id: selected.id.toString() || undefined,
-    title: selected.title,
-    author: selected.author,
-    price: selected.price,
-    publishDate: selected.publishDate,
-    inStock: selected.inStock,
-    discount: selected.discount,
-  });
-
-  useEffect(() => {
-    setBookData({
-      id: selected.id.toString() || undefined,
-      title: selected.title,
-      author: selected.author,
-      price: selected.price,
-      publishDate: selected.publishDate,
-      inStock: selected.inStock,
-      discount: selected.discount,
-    });
-    setType(selected.type);
-  }, [setBookData, setType, selected]);
-
-  useEffect(() => setIsNew(!selected.id), [setIsNew, selected]);
+  useEffect(() => setIsNew(!bookData.id), [setIsNew, bookData]);
 
   useEffect(() => {
     setValid(
@@ -168,6 +155,7 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
         <Select
           labelId="select-label"
           id="select"
+          disabled={!isNew}
           value={type}
           onChange={(e) => setType(e.target.value as BookType)}
         >
@@ -184,7 +172,7 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
           shrink: !!bookData.title,
         }}
         onChange={(e) => {
-          setBookData({ ...bookData, title: e.target.value.trim() });
+          setBookData({ ...bookData, title: e.target.value });
         }}
       />
       <TextField
@@ -197,7 +185,7 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
           shrink: !!bookData.author,
         }}
         onChange={(e) => {
-          setBookData({ ...bookData, author: e.target.value.trim() });
+          setBookData({ ...bookData, author: e.target.value });
         }}
       />
 
