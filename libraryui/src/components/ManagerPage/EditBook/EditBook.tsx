@@ -47,6 +47,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const validate = {
+  b0t100: (n: number) => n >= 0 && n <= 100,
+  text: (t: string) => !!t.trim(),
+  above0: (n: number) => n >= 0,
+};
+
 type props = {
   selected: Book;
   select: (book: Book) => void;
@@ -59,6 +65,7 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
 
   const [isNew, setIsNew] = useState(true);
   const [type, setType] = useState(selected.type);
+  const [valid, setValid] = useState(false);
 
   const [bookData, setBookData] = useState<IBookData>({
     id: selected.id.toString() || undefined,
@@ -84,6 +91,16 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
 
   useEffect(() => setIsNew(!selected.id), [setIsNew, selected]);
 
+  useEffect(() => {
+    setValid(
+      validate.text(bookData.title) &&
+        validate.text(bookData.author) &&
+        validate.above0(bookData.price) &&
+        validate.above0(bookData.inStock) &&
+        validate.b0t100(bookData.discount)
+    );
+  }, [bookData, setValid]);
+
   const getMenuItem = () =>
     Object.values(BookType).map((k, index) => (
       <MenuItem key={index} value={k}>
@@ -95,7 +112,9 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
     setBookData({ ...bookData, publishDate: date?.toDate() || "" });
   };
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!valid) return;
     if (isNew) {
       postBook(type, bookData);
     } else {
@@ -105,7 +124,12 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
   };
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
+    <form
+      className={classes.root}
+      noValidate
+      autoComplete="off"
+      onSubmit={onSubmitHandler}
+    >
       <AppBar position="static" color="default">
         <Tabs
           value={isNew}
@@ -151,11 +175,12 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
         id="title"
         label="Title"
         value={bookData.title}
+        error={!validate.text(bookData.title)}
         InputLabelProps={{
           shrink: !!bookData.title,
         }}
         onChange={(e) => {
-          setBookData({ ...bookData, title: e.target.value });
+          setBookData({ ...bookData, title: e.target.value.trim() });
         }}
       />
       <TextField
@@ -163,11 +188,12 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
         id="author"
         label="Author"
         value={bookData.author}
+        error={!validate.text(bookData.author)}
         InputLabelProps={{
           shrink: !!bookData.author,
         }}
         onChange={(e) => {
-          setBookData({ ...bookData, author: e.target.value });
+          setBookData({ ...bookData, author: e.target.value.trim() });
         }}
       />
 
@@ -196,15 +222,45 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
           startAdornment: <InputAdornment position="start">$</InputAdornment>,
         }}
         value={bookData.price}
-        InputLabelProps={{
-          shrink: true,
-        }}
+        error={!validate.above0(bookData.price)}
         onChange={(e) => {
           setBookData({ ...bookData, price: +e.target.value });
         }}
       />
+      <TextField
+        required
+        id="inStock"
+        label="In Stock"
+        type="number"
+        value={bookData.inStock}
+        error={!validate.above0(bookData.inStock)}
+        onChange={(e) => {
+          setBookData({ ...bookData, inStock: +e.target.value });
+        }}
+      />
+      <TextField
+        required
+        id="discount"
+        label="Discount"
+        type="number"
+        error={!validate.b0t100(bookData.discount)}
+        helperText={
+          validate.b0t100(bookData.discount)
+            ? ""
+            : "Discount cannot be above 100% or below 0"
+        }
+        value={bookData.discount}
+        onChange={(e) => {
+          setBookData({ ...bookData, discount: +e.target.value });
+        }}
+      />
       <div style={{ display: "flex", flexDirection: "row-reverse" }}>
-        <Fab color="secondary" aria-label="edit" onClick={onSubmitHandler}>
+        <Fab
+          color="secondary"
+          aria-label="edit"
+          type="submit"
+          disabled={!valid}
+        >
           {isNew ? <AddIcon /> : <SaveIcon />}
         </Fab>
       </div>
