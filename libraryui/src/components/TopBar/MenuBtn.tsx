@@ -46,7 +46,7 @@ const MenuBtn = () => {
       >
         <MenuItem onClick={() => handleClose("/")}>Home</MenuItem>
         <MenuItem onClick={() => handleClose("/manager")}>Manager</MenuItem>
-        <MenuItem onClick={() => handleClose("")}>My Cart</MenuItem>
+        <MenuItem onClick={() => handleClose("/cart")}>My Cart</MenuItem>
       </Menu>
     </div>
   );

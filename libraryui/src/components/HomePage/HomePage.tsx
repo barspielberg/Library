@@ -32,7 +32,7 @@ const HomePage: React.FC<props> = ({ books, getBooks, clearBooks }) => {
     getBooks(BookType.Novel);
     getBooks(BookType.StudyBook);
   }, [clearBooks, getBooks]);
-
+  //TODO filter by type
   return (
     <div className={classes.root}>
       {books.map((b) => (

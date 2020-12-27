@@ -17,6 +17,7 @@ import { RootState } from "../../redux/reducers/mainReducer";
 import { Badge } from "@material-ui/core";
 import Book from "../../models/Book";
 import MenuBtn from "./MenuBtn";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -83,6 +84,7 @@ interface ITopBarProps {
 
 const TopBar: React.FC<ITopBarProps> = ({ cart }) => {
   const classes = useStyles();
+  const history = useHistory();
   return (
     <AppBar position="static" className={classes.root}>
       <Toolbar>
@@ -109,6 +111,7 @@ const TopBar: React.FC<ITopBarProps> = ({ cart }) => {
           className={classes.menuButton}
           color="inherit"
           aria-label="ShoppingCart"
+          onClick={() => history.push("/cart")}
         >
           <Badge badgeContent={cart.length} color="secondary">
             <ShoppingCartIcon />

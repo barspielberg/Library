@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import TopBar from "./TopBar/TopBar";
 import HomePage from "./HomePage/HomePage";
 import ManagerPage from "./ManagerPage/ManagerPage";
+import CartPage from "./CartPage/CartPage";
 
 const theme = createMuiTheme({
   palette: {
@@ -31,6 +32,7 @@ const App: React.FC = () => {
           <section>
             <Switch>
               <Route path="/manager" component={ManagerPage} />
+              <Route path="/cart" component={CartPage} />
               <Route path="/" component={HomePage} />
             </Switch>
           </section>
