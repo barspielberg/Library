@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     display: "flex",
+    flex: 1,
+    minWidth: 400,
+    maxWidth: 800,
     flexDirection: "column",
     "& .MuiTextField-root": {
       margin: "0.5rem 2rem",
@@ -87,7 +90,8 @@ const EditBook: React.FC<props> = ({ selected, select, postBook, putBook }) => {
       inStock: selected.inStock,
       discount: selected.discount,
     });
-  }, [setBookData, selected]);
+    setType(selected.type);
+  }, [setBookData, setType, selected]);
 
   useEffect(() => setIsNew(!selected.id), [setIsNew, selected]);
 

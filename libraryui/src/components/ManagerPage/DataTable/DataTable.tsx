@@ -26,6 +26,8 @@ const columns: ColDef[] = [
     width: 150,
   },
   { field: "price", headerName: "Price ($)", width: 90 },
+  { field: "inStock", headerName: "In Stock", width: 100 },
+  { field: "discount", headerName: "Discount (%)", width: 120 },
 ];
 
 const btnStyle: CSSProperties = {
@@ -37,11 +39,12 @@ const btnStyle: CSSProperties = {
 const useStyles = makeStyles((theme) => ({
   raper: {
     height: 400,
-    width: 750,
+    // width: 750,
+    margin: "1rem",
   },
   table: {
     backgroundColor: theme.palette.background.paper,
-    border: "none",
+    // border: "none",
     "& .MuiDataGrid-colCellWrapper": {
       backgroundColor: grey[900],
     },

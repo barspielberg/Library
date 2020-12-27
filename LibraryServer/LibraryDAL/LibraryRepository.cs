@@ -55,6 +55,7 @@ namespace LibraryDAL
             {
                 if (id != book.Id) return null;
                 var dbBook = FindBook<T>(id);
+                if (dbBook == null) return null;
                 dbBook.Price = book.Price;
                 dbBook.Title = book.Title;
                 dbBook.PublishDate = book.PublishDate;

@@ -2,13 +2,17 @@ import React, { CSSProperties, useState } from "react";
 import DataTable from "./DataTable/DataTable";
 import EditBook from "./EditBook/EditBook";
 import Book from "../../models/Book";
+import BookCard from "../UIComponents/BookCard";
 
 const ManagerPage: React.FC = () => {
   const [selected, select] = useState<Book>(new Book());
   return (
-    <div style={styles}>
+    <div>
+      <div style={styles}>
+        <BookCard book={selected} />
+        <EditBook selected={selected} select={select} />
+      </div>
       <DataTable select={select} />
-      <EditBook selected={selected} select={select} />
     </div>
   );
 };
