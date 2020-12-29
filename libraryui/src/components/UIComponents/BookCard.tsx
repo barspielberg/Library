@@ -6,23 +6,19 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Book from "../../models/Book";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { CardMedia } from "@material-ui/core";
 import BookType from "../../models/BookType";
 import { connect } from "react-redux";
 import { addToCart } from "../../redux/actions/cartActions";
+import BookCardHead from "./BookCardHead";
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
   },
-  type: {
-    fontSize: 14,
-  },
-  author: {
+  date: {
     marginBottom: 12,
-    // marginInlineStart: "0.5rem",
     fontSize: 14,
   },
   price: {
@@ -59,16 +55,7 @@ const BookCard: React.FC<IBookCardProps> = ({ book, addToCart }) => {
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography className={classes.type} color="textSecondary" gutterBottom>
-          <BookmarkIcon fontSize="inherit" />
-          {book.type}
-        </Typography>
-        <Typography variant="h5" component="h2">
-          {book.title}
-        </Typography>
-        <Typography className={classes.author} color="textSecondary">
-          by {book.author}
-        </Typography>
+        <BookCardHead book={book} />
         <CardMedia
           className={classes.media}
           image={getImage(book.type)}
@@ -77,7 +64,7 @@ const BookCard: React.FC<IBookCardProps> = ({ book, addToCart }) => {
         <Typography className={classes.price} color="textSecondary">
           price: {book.price}$
         </Typography>
-        <Typography className={classes.author} color="textSecondary">
+        <Typography className={classes.date} color="textSecondary">
           Publish At: {book.publishDate.toLocaleDateString()}
         </Typography>
       </CardContent>
