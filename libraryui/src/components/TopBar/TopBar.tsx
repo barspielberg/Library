@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       display: "none",
+      cursor: "pointer",
       [theme.breakpoints.up("sm")]: {
         display: "block",
       },
@@ -89,7 +90,11 @@ const TopBar: React.FC<ITopBarProps> = ({ cart }) => {
     <AppBar position="static" className={classes.root}>
       <Toolbar>
         <MenuBtn />
-        <Typography variant="h6" className={classes.title}>
+        <Typography
+          variant="h6"
+          className={classes.title}
+          onClick={() => history.push("/")}
+        >
           The Library
         </Typography>
         <div className={classes.search}>
