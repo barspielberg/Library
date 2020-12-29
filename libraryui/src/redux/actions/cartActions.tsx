@@ -1,4 +1,5 @@
 import Book from "../../models/Book";
+import CartItem from "../../models/CartItem";
 
 export type cartActionTypes =
   | {
@@ -6,8 +7,9 @@ export type cartActionTypes =
       book: Book;
     }
   | {
-      type: "SUBTRACT_FROM_CART";
-      book: Book;
+      type: "CHANGE_AMOUNT";
+      item: CartItem;
+      amount: number;
     }
   | {
       type: "REMOVE_FROM_CART";
@@ -21,9 +23,14 @@ export const addToCart = (book: Book): cartActionTypes => ({
   type: "ADD_TO_CART",
   book,
 });
-export const subtractFromCart = (book: Book): cartActionTypes => ({
-  type: "SUBTRACT_FROM_CART",
-  book,
+
+export const changeAmount = (
+  item: CartItem,
+  amount: number
+): cartActionTypes => ({
+  type: "CHANGE_AMOUNT",
+  item,
+  amount,
 });
 
 export const removeFromCart = (book: Book): cartActionTypes => ({

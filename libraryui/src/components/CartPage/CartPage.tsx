@@ -11,6 +11,16 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import BookCardHead from "../UIComponents/BookCardHead";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import {
+  Button,
+  CardActions,
+  InputAdornment,
+  TextField,
+} from "@material-ui/core";
+import { red } from "@material-ui/core/colors";
+import { changeAmount, removeFromCart } from "../../redux/actions/cartActions";
 
 const useStyles = makeStyles({
   container: {
@@ -18,12 +28,28 @@ const useStyles = makeStyles({
     margin: "auto",
     marginTop: "1rem",
   },
+  actions: {
+    flexDirection: "row-reverse",
+  },
+  delCell: {
+    width: 10,
+    padding: 0,
+  },
+  deleteBtn: {
+    color: red[400],
+  },
 });
 interface ICartPageProps {
   items: CartItem[];
+  removeItem: (i: CartItem) => void;
+  changeAmount: (i: CartItem, a: number) => void;
 }
 
-const CartPage: React.FC<ICartPageProps> = ({ items }) => {
+const CartPage: React.FC<ICartPageProps> = ({
+  items,
+  removeItem,
+  changeAmount,
+}) => {
   const classes = useStyles();
 
   return (
@@ -31,6 +57,7 @@ const CartPage: React.FC<ICartPageProps> = ({ items }) => {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell className={classes.delCell}></TableCell>
             <TableCell>Book</TableCell>
             <TableCell align="center">Price (per unit)</TableCell>
             <TableCell align="center">Amount</TableCell>
@@ -40,17 +67,38 @@ const CartPage: React.FC<ICartPageProps> = ({ items }) => {
         <TableBody>
           {items.map((item, index) => (
             <TableRow key={index}>
-              <TableCell component="th" scope="row">
+              <TableCell className={classes.delCell}>
+                <IconButton
+                  aria-label="delete"
+                  className={classes.deleteBtn}
+                  onClick={() => removeItem(item)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
+              <TableCell>
                 <BookCardHead book={item.book} />
               </TableCell>
               <TableCell align="center">{item.book.price} $</TableCell>
-              <TableCell align="center">X {item.amount}</TableCell>
+              <TableCell align="center">
+                <TextField
+                  type="number"
+                  onChange={(e) => changeAmount(item, +e.target.value)}
+                  value={item.amount}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">X</InputAdornment>
+                    ),
+                  }}
+                />
+              </TableCell>
               <TableCell align="right">
                 = {item.amount * item.book.price} $
               </TableCell>
             </TableRow>
           ))}
           <TableRow>
+            <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell align="center">
@@ -63,6 +111,15 @@ const CartPage: React.FC<ICartPageProps> = ({ items }) => {
           </TableRow>
         </TableBody>
       </Table>
+      <CardActions className={classes.actions}>
+        <Button
+          disabled={items.length <= 0}
+          variant="contained"
+          color="secondary"
+        >
+          buy now!
+        </Button>
+      </CardActions>
     </TableContainer>
   );
 };
@@ -70,5 +127,8 @@ const CartPage: React.FC<ICartPageProps> = ({ items }) => {
 const mapState2Props = (state: RootState) => ({
   items: state.cart,
 });
-const mapDispatch2Props = {};
+const mapDispatch2Props = {
+  removeItem: (i: CartItem) => removeFromCart(i.book),
+  changeAmount: (i: CartItem, a: number) => changeAmount(i, a),
+};
 export default connect(mapState2Props, mapDispatch2Props)(CartPage);

@@ -17,15 +17,12 @@ const cartReducer = (
         ];
       }
       return [...state, new CartItem(action.book)];
-    case "SUBTRACT_FROM_CART":
-      const subItem = state.find((i) => i.book.id === action.book.id);
-      if (subItem) {
-        return [
-          ...state.filter((i) => i.book.id !== action.book.id),
-          { ...subItem, amount: subItem.amount - 1 },
-        ];
-      }
-      return [...state, new CartItem(action.book)];
+    case "CHANGE_AMOUNT":
+      return state.map((item) =>
+        item.book.id === action.item.book.id
+          ? { ...item, amount: action.amount }
+          : item
+      );
     case "REMOVE_FROM_CART":
       return state.filter((b) => b.book.id !== action.book.id);
     case "CLEAR_CART":
