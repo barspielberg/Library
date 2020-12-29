@@ -21,6 +21,7 @@ import {
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import { changeAmount, removeFromCart } from "../../redux/actions/cartActions";
+import Book from "../../models/Book";
 
 const useStyles = makeStyles({
   container: {
@@ -39,18 +40,36 @@ const useStyles = makeStyles({
     color: red[400],
   },
 });
+
 interface ICartPageProps {
+  books: Book[];
   items: CartItem[];
   removeItem: (i: CartItem) => void;
   changeAmount: (i: CartItem, a: number) => void;
 }
 
 const CartPage: React.FC<ICartPageProps> = ({
+  books,
   items,
   removeItem,
   changeAmount,
 }) => {
   const classes = useStyles();
+
+  const validateAmount = (item: CartItem): string => {
+    if (item.amount < 0) return "Amount cannot be under zero";
+    const inStock = books.find((b) => b.id === item.book.id)?.inStock;
+    if (inStock && inStock < item.amount)
+      return `There are only ${inStock} in stock`;
+    if (!inStock) return "Item cannot be found in stock";
+    return "";
+  };
+
+  const validateAll = (items: CartItem[]): boolean =>
+    items.reduce<boolean>((pre, i) => pre && !validateAmount(i), true);
+
+  const countItems = (items: CartItem[]): number =>
+    items.reduce((pre, i) => pre + i.amount, 0);
 
   return (
     <TableContainer component={Paper} className={classes.container}>
@@ -85,6 +104,8 @@ const CartPage: React.FC<ICartPageProps> = ({
                   type="number"
                   onChange={(e) => changeAmount(item, +e.target.value)}
                   value={item.amount}
+                  error={!!validateAmount(item)}
+                  helperText={validateAmount(item)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">X</InputAdornment>
@@ -101,9 +122,7 @@ const CartPage: React.FC<ICartPageProps> = ({
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
-            <TableCell align="center">
-              {items.reduce((pre, i) => pre + i.amount, 0)} items
-            </TableCell>
+            <TableCell align="center">{countItems(items)} items</TableCell>
             <TableCell align="right">
               Total ={" "}
               {items.reduce((pre, i) => pre + i.amount * i.book.price, 0)}$
@@ -113,7 +132,7 @@ const CartPage: React.FC<ICartPageProps> = ({
       </Table>
       <CardActions className={classes.actions}>
         <Button
-          disabled={items.length <= 0}
+          disabled={!validateAll(items) || countItems(items) <= 0}
           variant="contained"
           color="secondary"
         >
@@ -126,6 +145,7 @@ const CartPage: React.FC<ICartPageProps> = ({
 
 const mapState2Props = (state: RootState) => ({
   items: state.cart,
+  books: state.books,
 });
 const mapDispatch2Props = {
   removeItem: (i: CartItem) => removeFromCart(i.book),
