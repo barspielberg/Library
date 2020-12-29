@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import CartItem from "../../models/CartItem";
 import { RootState } from "../../redux/reducers/mainReducer";
@@ -22,6 +22,7 @@ import {
 import { red } from "@material-ui/core/colors";
 import { changeAmount, removeFromCart } from "../../redux/actions/cartActions";
 import Book from "../../models/Book";
+import Purchase from "./Purchase/Purchase";
 
 const useStyles = makeStyles({
   container: {
@@ -55,6 +56,7 @@ const CartPage: React.FC<ICartPageProps> = ({
   changeAmount,
 }) => {
   const classes = useStyles();
+  const [showPur, setShowPur] = useState(false);
 
   const validateAmount = (item: CartItem): string => {
     if (item.amount < 0) return "Amount cannot be under zero";
@@ -72,74 +74,78 @@ const CartPage: React.FC<ICartPageProps> = ({
     items.reduce((pre, i) => pre + i.amount, 0);
 
   return (
-    <TableContainer component={Paper} className={classes.container}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell className={classes.delCell}></TableCell>
-            <TableCell>Book</TableCell>
-            <TableCell align="center">Price (per unit)</TableCell>
-            <TableCell align="center">Amount</TableCell>
-            <TableCell align="right">Sum ($)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {items.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell className={classes.delCell}>
-                <IconButton
-                  aria-label="delete"
-                  className={classes.deleteBtn}
-                  onClick={() => removeItem(item)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </TableCell>
-              <TableCell>
-                <BookCardHead book={item.book} />
-              </TableCell>
-              <TableCell align="center">{item.book.price} $</TableCell>
-              <TableCell align="center">
-                <TextField
-                  type="number"
-                  onChange={(e) => changeAmount(item, +e.target.value)}
-                  value={item.amount}
-                  error={!!validateAmount(item)}
-                  helperText={validateAmount(item)}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">X</InputAdornment>
-                    ),
-                  }}
-                />
-              </TableCell>
+    <React.Fragment>
+      <TableContainer component={Paper} className={classes.container}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.delCell}></TableCell>
+              <TableCell>Book</TableCell>
+              <TableCell align="center">Price (per unit)</TableCell>
+              <TableCell align="center">Amount</TableCell>
+              <TableCell align="right">Sum ($)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {items.map((item, index) => (
+              <TableRow key={index}>
+                <TableCell className={classes.delCell}>
+                  <IconButton
+                    aria-label="delete"
+                    className={classes.deleteBtn}
+                    onClick={() => removeItem(item)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+                <TableCell>
+                  <BookCardHead book={item.book} />
+                </TableCell>
+                <TableCell align="center">{item.book.price} $</TableCell>
+                <TableCell align="center">
+                  <TextField
+                    type="number"
+                    onChange={(e) => changeAmount(item, +e.target.value)}
+                    value={item.amount}
+                    error={!!validateAmount(item)}
+                    helperText={validateAmount(item)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">X</InputAdornment>
+                      ),
+                    }}
+                  />
+                </TableCell>
+                <TableCell align="right">
+                  = {item.amount * item.book.price} $
+                </TableCell>
+              </TableRow>
+            ))}
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell align="center">{countItems(items)} items</TableCell>
               <TableCell align="right">
-                = {item.amount * item.book.price} $
+                Total ={" "}
+                {items.reduce((pre, i) => pre + i.amount * i.book.price, 0)}$
               </TableCell>
             </TableRow>
-          ))}
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell align="center">{countItems(items)} items</TableCell>
-            <TableCell align="right">
-              Total ={" "}
-              {items.reduce((pre, i) => pre + i.amount * i.book.price, 0)}$
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      <CardActions className={classes.actions}>
-        <Button
-          disabled={!validateAll(items) || countItems(items) <= 0}
-          variant="contained"
-          color="secondary"
-        >
-          buy now!
-        </Button>
-      </CardActions>
-    </TableContainer>
+          </TableBody>
+        </Table>
+        <CardActions className={classes.actions}>
+          <Button
+            disabled={!validateAll(items) || countItems(items) <= 0}
+            variant="contained"
+            color="secondary"
+            onClick={() => setShowPur(true)}
+          >
+            buy now!
+          </Button>
+        </CardActions>
+      </TableContainer>
+      <Purchase items={items} show={showPur} />
+    </React.Fragment>
   );
 };
 

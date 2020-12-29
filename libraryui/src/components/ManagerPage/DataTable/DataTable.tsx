@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   raper: {
     height: 400,
     // width: 750,
-    margin: "1rem",
+    margin: "1rem 0",
   },
   table: {
     backgroundColor: theme.palette.background.paper,
