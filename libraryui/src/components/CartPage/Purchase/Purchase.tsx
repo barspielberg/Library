@@ -12,14 +12,11 @@ const Purchase: React.FC<IPurchaseProps> = ({ show, items }) => {
   const [blur, setBlur] = useState<CSSProperties>({});
 
   useEffect(() => {
-    setBlur({});
-    setTimeout(() => {
+    if (show)
       setBlur({
-        backgroundColor: "#0000006e",
-        backdropFilter: "blur(5px)",
+        backdropFilter: "blur(5px)  brightness(0.4)",
       });
-    }, 1000);
-  }, []);
+  }, [show]);
 
   return show ? (
     <React.Fragment>
@@ -39,5 +36,5 @@ const backDropStyle: CSSProperties = {
   width: "100%",
   height: "100%",
   zIndex: 10,
-  transition: "all 1s",
+  transition: "all 0.5s",
 };
