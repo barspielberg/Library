@@ -42,7 +42,6 @@ const getImage = (type: BookType) => {
       return "";
   }
 };
-//TODO discount bage and price
 //TODO display uppercase first char
 
 interface IBookCardProps {
