@@ -27,9 +27,13 @@ const useStyles = makeStyles({
 
 interface IPurchaseDataProps {
   items: CartItem[];
+  purchaseHandler: () => void;
 }
 
-const PurchaseData: React.FC<IPurchaseDataProps> = ({ items }) => {
+const PurchaseData: React.FC<IPurchaseDataProps> = ({
+  items,
+  purchaseHandler,
+}) => {
   const classes = useStyles();
   const tableRef = useRef<HTMLElement>();
   useEffect(() => tableRef.current?.scrollIntoView({ behavior: "smooth" }), []);
@@ -55,10 +59,12 @@ const PurchaseData: React.FC<IPurchaseDataProps> = ({ items }) => {
               <TableCell>
                 <BookCardHead book={item.book} />
               </TableCell>
-              <TableCell align="center">{item.book.price} $</TableCell>
+              <TableCell align="center">
+                {item.book.getPrice().toFixed(2)} $
+              </TableCell>
               <TableCell align="center">X {item.amount}</TableCell>
               <TableCell align="right">
-                = {item.amount * item.book.price} $
+                = {item.getPrice().toFixed(2)} $
               </TableCell>
             </TableRow>
           ))}
@@ -70,13 +76,13 @@ const PurchaseData: React.FC<IPurchaseDataProps> = ({ items }) => {
             </TableCell>
             <TableCell align="right">
               Total ={" "}
-              {items.reduce((pre, i) => pre + i.amount * i.book.price, 0)}$
+              {items.reduce((pre, i) => pre + i.getPrice(), 0).toFixed(2)}$
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
       <CardActions className={classes.actions}>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" onClick={purchaseHandler}>
           confirm
         </Button>
       </CardActions>

@@ -12,6 +12,10 @@ class Book implements RowModel {
     public discount: number = 0,
     public type: BookType = BookType.Magazine
   ) {}
+
+  getPrice() {
+    return (1 - this.discount / 100) * this.price;
+  }
 }
 
 export default Book;

@@ -52,6 +52,7 @@ interface IBookCardProps {
 
 const BookCard: React.FC<IBookCardProps> = ({ book, addToCart }) => {
   const classes = useStyles();
+
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -62,7 +63,16 @@ const BookCard: React.FC<IBookCardProps> = ({ book, addToCart }) => {
           title={book.title}
         />
         <Typography className={classes.price} color="textSecondary">
-          price: {book.price}$
+          price:{" "}
+          {book.discount ? (
+            <span style={{ textDecoration: "line-through" }}>
+              {book.price.toFixed(2)}$
+            </span>
+          ) : null}
+          <span style={{ color: book.discount ? "#64b5f6" : "inherit" }}>
+            {" "}
+            {book.getPrice().toFixed(2)}$
+          </span>
         </Typography>
         <Typography className={classes.date} color="textSecondary">
           Publish At: {book.publishDate.toLocaleDateString()}

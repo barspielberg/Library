@@ -13,14 +13,14 @@ const cartReducer = (
       if (addItem) {
         return [
           ...state.filter((i) => i.book.id !== action.book.id),
-          { ...addItem, amount: addItem.amount + 1 },
+          new CartItem(addItem.book, addItem.amount + 1),
         ];
       }
       return [...state, new CartItem(action.book)];
     case "CHANGE_AMOUNT":
       return state.map((item) =>
         item.book.id === action.item.book.id
-          ? { ...item, amount: action.amount }
+          ? new CartItem(item.book, action.amount)
           : item
       );
     case "REMOVE_FROM_CART":

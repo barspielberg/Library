@@ -101,7 +101,9 @@ const CartPage: React.FC<ICartPageProps> = ({
                 <TableCell>
                   <BookCardHead book={item.book} />
                 </TableCell>
-                <TableCell align="center">{item.book.price} $</TableCell>
+                <TableCell align="center">
+                  {item.book.getPrice().toFixed(2)} $
+                </TableCell>
                 <TableCell align="center">
                   <TextField
                     type="number"
@@ -117,7 +119,7 @@ const CartPage: React.FC<ICartPageProps> = ({
                   />
                 </TableCell>
                 <TableCell align="right">
-                  = {item.amount * item.book.price} $
+                  = {item.getPrice().toFixed(2)} $
                 </TableCell>
               </TableRow>
             ))}
@@ -128,7 +130,7 @@ const CartPage: React.FC<ICartPageProps> = ({
               <TableCell align="center">{countItems(items)} items</TableCell>
               <TableCell align="right">
                 Total ={" "}
-                {items.reduce((pre, i) => pre + i.amount * i.book.price, 0)}$
+                {items.reduce((pre, i) => pre + i.getPrice(), 0).toFixed(2)}$
               </TableCell>
             </TableRow>
           </TableBody>
