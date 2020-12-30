@@ -37,6 +37,12 @@ namespace LibraryDAL
             return context.Set<T>();
         }
 
+        public AbstractBook GetBook(Guid id)
+        {
+
+            return FindBook<AbstractBook>(id);
+        }
+
         public async Task<T> PostBookAsnc<T>(T book) where T : AbstractBook
         {
             try

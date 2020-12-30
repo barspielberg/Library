@@ -27,14 +27,31 @@ namespace LibraryBL
             return repository.GetBooks<T>();
         }
 
+        public AbstractBook GetBook(Guid id)
+        {
+            return repository.GetBook(id);
+        }
+
         public Task<T> PostBookAsnc<T>(T book) where T : AbstractBook
         {
-            return repository.PostBookAsnc<T>(book);
+            return repository.PostBookAsnc(book);
         }
 
         public Task<T> PutBookAsnc<T>(Guid id, T book) where T : AbstractBook
         {
             return repository.PutBookAsnc(id, book);
+        }
+
+        public async Task<bool> RemoveFromStockAsync(Guid bookId, uint amount)
+        {
+            var book = GetBook(bookId);
+            if (amount <= book.InStock)
+            {
+                book.InStock -= amount;
+               await PutBookAsnc(bookId, book);
+                return true;
+            }
+            return false;
         }
     }
 }

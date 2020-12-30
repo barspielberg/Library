@@ -10,6 +10,7 @@ namespace LibraryDAL
 {
     public class LibraryContext : DbContext
     {
+        public DbSet<AbstractBook> AllBooks { get; set; }
         public DbSet<Magazine> Magazines { get; set; }
         public DbSet<Novel> Novels { get; set; }
         public DbSet<StudyBook> StudyBooks { get; set; }
