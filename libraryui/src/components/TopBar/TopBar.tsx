@@ -86,6 +86,11 @@ interface ITopBarProps {
 const TopBar: React.FC<ITopBarProps> = ({ cart }) => {
   const classes = useStyles();
   const history = useHistory();
+  const searchHandler = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    history.push("/?search=" + e.target.value);
+  };
   return (
     <AppBar position="static" className={classes.root}>
       <Toolbar>
@@ -103,6 +108,7 @@ const TopBar: React.FC<ITopBarProps> = ({ cart }) => {
           </div>
           <InputBase
             placeholder="Search…"
+            onChange={searchHandler}
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput,

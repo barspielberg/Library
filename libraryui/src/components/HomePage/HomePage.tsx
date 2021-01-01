@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useLocation } from "react-router";
 import Book from "../../models/Book";
 import BookType from "../../models/BookType";
 import { clearAll, getBooksAsync } from "../../redux/actions/booksActions";
@@ -23,6 +24,9 @@ const useStyles = makeStyles({
   },
 });
 
+const useSearchQuery = () =>
+  new URLSearchParams(useLocation().search).get("search");
+
 interface props {
   books: Book[];
   getBooks: (type: BookType) => void;
@@ -31,7 +35,19 @@ interface props {
 
 const HomePage: React.FC<props> = ({ books, getBooks, clearBooks }) => {
   const classes = useStyles();
+  const [filterdByType, setFilterdByType] = useState(books);
   const [filterdBooks, setFilterdBooks] = useState(books);
+  const query = useSearchQuery();
+
+  useEffect(() => {
+    if (query)
+      setFilterdBooks(
+        filterdByType.filter(
+          (b) => b.title.includes(query) || b.author.includes(query)
+        )
+      );
+    else setFilterdBooks(filterdByType);
+  }, [query, filterdByType, setFilterdBooks]);
 
   useEffect(() => {
     clearBooks();
@@ -43,7 +59,7 @@ const HomePage: React.FC<props> = ({ books, getBooks, clearBooks }) => {
   return (
     <div>
       <div className={classes.selectBox}>
-        <SelectBookType books={books} onFilterChanged={setFilterdBooks} />
+        <SelectBookType books={books} onFilterChanged={setFilterdByType} />
       </div>
       <div className={classes.grid}>
         {filterdBooks.map((b) => (
