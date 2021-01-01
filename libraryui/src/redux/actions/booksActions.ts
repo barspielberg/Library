@@ -51,13 +51,13 @@ export const postBookAsync = (
   bookType: BookType,
   bookData: IBookData
 ): AppThunk => (dispatch) => {
-  DataService.postBook(bookType, bookData).then((b) => dispatch(addBooks([b])));
+  DataService.postBook(bookType, bookData).then((b) => b && dispatch(addBooks([b])));
 };
 export const putBookAsync = (
   bookType: BookType,
   bookData: IBookData
 ): AppThunk => (dispatch) => {
-  DataService.putBook(bookType, bookData).then((b) => dispatch(updateBook(b)));
+  DataService.putBook(bookType, bookData).then((b) => b && dispatch(updateBook(b)));
 };
 
 export const getBooksAsync = (type: BookType): AppThunk => (dispatch) => {
