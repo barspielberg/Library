@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ColDef, DataGrid, RowId } from "@material-ui/data-grid";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import IconButton from "@material-ui/core/IconButton";
@@ -13,6 +13,7 @@ import {
 } from "../../../redux/actions/booksActions";
 import { makeStyles } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
+import SelectBookType from "../../UIComponents/SelectBookType";
 
 const columns: ColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
@@ -30,25 +31,24 @@ const columns: ColDef[] = [
   { field: "discount", headerName: "Discount (%)", width: 120 },
 ];
 
-const btnStyle: CSSProperties = {
-  position: "absolute",
-  bottom: "0.2rem",
-  left: "7.5rem",
-};
-
 const useStyles = makeStyles((theme) => ({
   raper: {
     height: 400,
     // width: 750,
-    margin: "1rem 0",
+    marginBottom: "1rem",
   },
   table: {
     backgroundColor: theme.palette.background.paper,
-    // border: "none",
     "& .MuiDataGrid-colCellWrapper": {
       backgroundColor: grey[900],
     },
   },
+  delBtn: {
+    position: "absolute",
+    bottom: "0.2rem",
+    left: "7.5rem",
+  },
+  selectType: { display: "flex", flexDirection: "column", marginTop: "1rem" },
 }));
 
 interface props {
@@ -66,8 +66,9 @@ const DataTable: React.FC<props> = ({
   clearBooks,
   deleteBooks,
 }) => {
-  const [selcetedBooks, setSelectedBooks] = useState<RowId[]>([]);
   const classes = useStyles();
+  const [selcetedBooks, setSelectedBooks] = useState<RowId[]>([]);
+  const [filterdBooks, setFilterdBooks] = useState(books);
 
   useEffect(() => {
     clearBooks();
@@ -82,26 +83,32 @@ const DataTable: React.FC<props> = ({
   };
 
   return (
-    <div className={classes.raper}>
-      <DataGrid
-        className={classes.table}
-        rows={books}
-        columns={columns}
-        pageSize={5}
-        checkboxSelection
-        onSelectionChange={(params) => setSelectedBooks(params.rowIds)}
-        onRowClick={(params) => select(params.row as Book)}
-      />
-      {selcetedBooks.length > 0 && (
-        <IconButton
-          aria-label="DeleteForever"
-          style={btnStyle}
-          onClick={deleteHandler}
-        >
-          <DeleteForeverIcon />
-        </IconButton>
-      )}
-    </div>
+    <React.Fragment>
+      <div className={classes.selectType}>
+        <SelectBookType books={books} onFilterChanged={setFilterdBooks} />
+      </div>
+      <div className={classes.raper}>
+        <DataGrid
+          className={classes.table}
+          rows={filterdBooks}
+          columns={columns}
+          pageSize={5}
+          checkboxSelection
+          onSelectionChange={(params) => setSelectedBooks(params.rowIds)}
+          onRowClick={(params) => select(params.row as Book)}
+        />
+
+        {selcetedBooks.length > 0 && (
+          <IconButton
+            aria-label="DeleteForever"
+            className={classes.delBtn}
+            onClick={deleteHandler}
+          >
+            <DeleteForeverIcon />
+          </IconButton>
+        )}
+      </div>
+    </React.Fragment>
   );
 };
 

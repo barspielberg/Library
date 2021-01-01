@@ -49,7 +49,6 @@ const ManagerPage: React.FC = () => {
   );
 };
 //TODO add discount to many
-//TODO filter by type
 export default ManagerPage;
 
 const styles: CSSProperties = {

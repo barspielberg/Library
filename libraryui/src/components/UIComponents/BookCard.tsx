@@ -42,7 +42,6 @@ const getImage = (type: BookType) => {
       return "";
   }
 };
-//TODO display uppercase first char
 
 interface IBookCardProps {
   book: Book;
