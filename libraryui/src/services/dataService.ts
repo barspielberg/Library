@@ -5,6 +5,8 @@ import IBookData from "../models/IBookData";
 
 axios.defaults.baseURL = "https://localhost:44381/api/";
 
+//TODO add error handling
+
 export const getBooks = (type: BookType): Promise<Book[]> => {
   return new Promise((res, rej) => {
     axios
