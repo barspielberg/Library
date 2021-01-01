@@ -1,35 +1,47 @@
 import axios, { AxiosResponse } from "axios";
 import Book from "../models/Book";
-import BookType from "../models/BookType";
-import IBookData from "../models/IBookData";
+import type BookType from "../models/BookType";
+import type IBookData from "../models/IBookData";
 
 axios.defaults.baseURL = "https://localhost:44381/api/";
 
-export const getBooks = (type: BookType): Promise<Book[]> => {
-  return new Promise((res, rej) => {
-    axios
-      .get<IBookData[]>("/" + gteStringType(type))
-      .then((r) => res(r.data.map((d) => bookDataToBook(d, type))));
-  });
+export const getBooks = async (type: BookType): Promise<Book[]> => {
+  try {
+		const fetched = await axios.get<IBookData[]>(`/${gteStringType(type)}`);
+		return fetched.data.map(d => bookDataToBook(d, type));
+	} catch (e) {
+		return [];
+	}
 };
 
-export const postBook = (
-  type: BookType,
-  bookData: IBookData
-): Promise<Book> => {
-  return new Promise((res, rej) => {
-    axios
-      .post<IBookData>("/" + gteStringType(type), bookData)
-      .then((r) => res(bookDataToBook(r.data, type)));
-  });
+export const postBook = async (
+	type: BookType,
+	bookData: IBookData
+): Promise<Book | undefined> => {
+	try {
+		const fetched = await axios.post<IBookData>(
+			`/${gteStringType(type)}`,
+			bookData
+		);
+		return bookDataToBook(fetched.data, type);
+	} catch (e) {
+		return undefined;
+	}
 };
 
-export const putBook = (type: BookType, bookData: IBookData): Promise<Book> => {
-  return new Promise((res, rej) => {
-    axios
-      .put<IBookData>("/" + gteStringType(type) + "/" + bookData.id, bookData)
-      .then((r) => res(bookDataToBook(r.data, type)));
-  });
+export const putBook = async (
+	type: BookType,
+	bookData: IBookData
+): Promise<Book | undefined> => {
+	try {
+		const res = await axios.put(
+			`/${gteStringType(type)}/${bookData.id}`,
+			bookData
+		);
+		return bookDataToBook(res.data, type);
+	} catch (e) {
+		return undefined;
+	}
 };
 
 export const deleteBooks = (
