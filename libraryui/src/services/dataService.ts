@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import Book from "../models/Book";
-import BookType from "../models/BookType";
-import IBookData from "../models/IBookData";
+import type BookType from "../models/BookType";
+import type IBookData from "../models/IBookData";
 
 axios.defaults.baseURL = "https://localhost:44381/api/";
 
