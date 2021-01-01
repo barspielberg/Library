@@ -1,5 +1,6 @@
 import { makeStyles, Select } from "@material-ui/core";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import Book from "../../models/Book";
 import BookType from "../../models/BookType";
 
 const useStyles = makeStyles({
@@ -10,21 +11,35 @@ const useStyles = makeStyles({
 });
 
 interface ISelectBookTypeProps {
-  value?: BookType;
-  onChange: (val: BookType) => void;
+  books: Book[];
+  onFilterChanged: (filterdBooks: Book[]) => void;
 }
 
 const SelectBookType: React.FC<ISelectBookTypeProps> = ({
-  value,
-  onChange,
+  books,
+  onFilterChanged,
 }) => {
   const classes = useStyles();
+  const [type, setType] = useState<BookType>();
+
+  const handelTypeChange = (type: BookType | undefined) => {
+    setType(type);
+    filterBooks(type);
+  };
+  const filterBooks = useCallback(
+    (type: BookType | undefined) => {
+      if (!type) onFilterChanged(books);
+      else onFilterChanged(books.filter((b) => b.type === type));
+    },
+    [onFilterChanged, books]
+  );
+  useEffect(() => filterBooks(type), [books, filterBooks, type]);
   return (
     <Select
       native
       className={classes.select}
-      value={value}
-      onChange={(e) => onChange(e.target.value as BookType)}
+      value={type}
+      onChange={(e) => handelTypeChange(e.target.value as BookType)}
     >
       <option aria-label="None" value="">
         All Books

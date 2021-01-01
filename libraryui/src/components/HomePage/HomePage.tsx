@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Book from "../../models/Book";
 import BookType from "../../models/BookType";
@@ -32,21 +32,6 @@ interface props {
 const HomePage: React.FC<props> = ({ books, getBooks, clearBooks }) => {
   const classes = useStyles();
   const [filterdBooks, setFilterdBooks] = useState(books);
-  const [type, setType] = useState<BookType>();
-
-  const handelTypeChange = (type: BookType | undefined) => {
-    setType(type);
-    filterBooks(type);
-  };
-  const filterBooks = useCallback(
-    (type: BookType | undefined) => {
-      if (!type) setFilterdBooks(books);
-      else {
-        setFilterdBooks(books.filter((b) => b.type === type));
-      }
-    },
-    [setFilterdBooks, books]
-  );
 
   useEffect(() => {
     clearBooks();
@@ -55,12 +40,10 @@ const HomePage: React.FC<props> = ({ books, getBooks, clearBooks }) => {
     getBooks(BookType.StudyBook);
   }, [clearBooks, getBooks]);
 
-  useEffect(() => filterBooks(type), [books, filterBooks, type]);
-
   return (
     <div>
       <div className={classes.selectBox}>
-        <SelectBookType value={type} onChange={handelTypeChange} />
+        <SelectBookType books={books} onFilterChanged={setFilterdBooks} />
       </div>
       <div className={classes.grid}>
         {filterdBooks.map((b) => (
