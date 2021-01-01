@@ -7,7 +7,7 @@ axios.defaults.baseURL = "https://localhost:44381/api/";
 
 export const getBooks = async (type: BookType): Promise<Book[]> => {
   try {
-		const fetched = await axios.get<IBookData[]>(`/${gteStringType(type)}`);
+		const fetched = await axios.get<IBookData[]>(`/${getStringType(type)}`);
 		return fetched.data.map(d => bookDataToBook(d, type));
 	} catch (e) {
 		return [];
@@ -20,7 +20,7 @@ export const postBook = async (
 ): Promise<Book | undefined> => {
 	try {
 		const fetched = await axios.post<IBookData>(
-			`/${gteStringType(type)}`,
+			`/${getStringType(type)}`,
 			bookData
 		);
 		return bookDataToBook(fetched.data, type);
@@ -35,7 +35,7 @@ export const putBook = async (
 ): Promise<Book | undefined> => {
 	try {
 		const res = await axios.put(
-			`/${gteStringType(type)}/${bookData.id}`,
+			`/${getStringType(type)}/${bookData.id}`,
 			bookData
 		);
 		return bookDataToBook(res.data, type);
@@ -43,14 +43,13 @@ export const putBook = async (
 		return undefined;
 	}
 };
-
 export const deleteBooks = (
   type: BookType,
   ids: string[]
 ): Promise<AxiosResponse<any>> =>
-  axios.delete("/" + gteStringType(type), { data: ids });
+  axios.delete(`/${getStringType(type)}`, { data: ids });
 
-const gteStringType = (type: BookType): string => {
+const getStringType = (type: BookType): string => {
   switch (type) {
     case BookType.Magazine:
       return "Magazines";
