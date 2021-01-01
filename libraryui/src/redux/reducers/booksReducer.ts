@@ -1,4 +1,4 @@
-import Book from "../../models/Book";
+import type Book from "../../models/Book";
 import { BookActionTypes } from "../actions/booksActions";
 
 const initialState: Book[] = [];

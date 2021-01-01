@@ -1,4 +1,4 @@
-import Book from "./Book";
+import type Book from "./Book";
 
 class CartItem {
   constructor(public book: Book, public amount: number = 1) {}
