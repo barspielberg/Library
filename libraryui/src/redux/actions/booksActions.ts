@@ -1,8 +1,8 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import Book from "../../models/Book";
-import BookType from "../../models/BookType";
-import IBookData from "../../models/IBookData";
+import type BookType from "../../models/BookType";
+import type IBookData from "../../models/IBookData";
 import * as DataService from "../../services/dataService";
 import { RootState } from "../reducers/mainReducer";
 

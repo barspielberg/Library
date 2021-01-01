@@ -1,5 +1,5 @@
 import axios from "axios";
-import CartItem from "../models/CartItem";
+import type CartItem from "../models/CartItem";
 
 axios.defaults.baseURL = "https://localhost:44381/api/";
 
